@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
+    "dotenv": "^16.0.2",
     "parcel": "^2.7.0",
     "sanctuary": "^3.1.0",
     "typescript": "^4.8.3"
@@ -14,8 +15,9 @@
     "dev": "yarn ts-node"
   },
   "devDependencies": {
+    "@parcel/packager-ts": "2.7.0",
+    "@parcel/transformer-typescript-types": "2.7.0",
     "@types/node": "^18.7.18",
-    "dotenv": "^16.0.2",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.1"
   }
