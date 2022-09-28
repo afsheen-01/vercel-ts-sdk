@@ -1,24 +1,43 @@
 {
-  "name": "vercel-ts-sdk",
+  "name": "vercel-sdk",
   "version": "1.0.0",
   "license": "MIT",
   "source": "src/index.ts",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "dotenv": "^16.0.2",
+    "node-fetch": "^2.6.6",
     "parcel": "^2.7.0",
     "sanctuary": "^3.1.0",
     "typescript": "^4.8.3"
   },
   "scripts": {
-    "dev": "yarn ts-node"
+    "dev": "yarn ts-node",
+    "build": "yarn parcel build ./src/index.ts",
+    "test": "yarn jest"
   },
   "devDependencies": {
+    "@jest/globals": "^29.0.3",
     "@parcel/packager-ts": "2.7.0",
     "@parcel/transformer-typescript-types": "2.7.0",
     "@types/node": "^18.7.18",
+    "@types/node-fetch": "^2.6.2",
+    "@types/sanctuary": "^3.1.0",
+    "assert": "^2.0.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "events": "^3.3.0",
+    "https-browserify": "^1.0.0",
+    "jest": "^29.0.3",
+    "path-browserify": "^1.0.1",
     "prettier": "^2.7.1",
-    "ts-node": "^10.9.1"
+    "process": "^0.11.10",
+    "querystring-es3": "^0.2.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "ts-jest": "^29.0.2",
+    "ts-node": "^10.9.1",
+    "url": "^0.11.0",
+    "util": "^0.12.4"
   }
 }
