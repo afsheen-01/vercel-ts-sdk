@@ -23,7 +23,7 @@ $ yarn build
 $ export VERCEL_TOKEN=${token}
 ```
 
-3. Run the tests
+4. Run the tests
 
 ```
 $ yarn test
