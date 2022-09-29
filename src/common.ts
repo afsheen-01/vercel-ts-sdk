@@ -90,3 +90,59 @@ export const asyncFetchWrapper = async <T>(
   }
   return { data, error };
 };
+
+export type PaginationParameters =
+  | {
+      limit: number;
+    }
+  | {
+      limit: number;
+      next: number;
+      previous: never;
+    }
+  | {
+      limit: number;
+      previous: number;
+      next: never;
+    }
+  | {
+      next: number;
+      previous: never;
+    }
+  | {
+      previous: number;
+      next: never;
+    };
+
+export const constructPaginationString = ({
+  url,
+  paginationParameters,
+}: {
+  url: string;
+  paginationParameters?: PaginationParameters;
+}) => {
+  if (paginationParameters) {
+    const listOfParams = [
+      [
+        "limit",
+        "limit" in paginationParameters ? paginationParameters.limit : null,
+      ],
+      [
+        "until",
+        "next" in paginationParameters ? paginationParameters.next : null,
+      ],
+      [
+        "until",
+        "previous" in paginationParameters
+          ? paginationParameters.previous
+          : null,
+      ],
+    ].filter(([_, val]) => val !== null);
+    const queryParams =
+      "?" + listOfParams.map(([key, val]) => `${key}=${val}`).join("&");
+    return url + queryParams;
+  }
+  return url;
+};
+
+[["limit", 10]];
