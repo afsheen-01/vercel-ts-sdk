@@ -98,20 +98,16 @@ export type PaginationParameters =
   | {
       limit: number;
       next: number;
-      previous: never;
     }
   | {
       limit: number;
       previous: number;
-      next: never;
     }
   | {
       next: number;
-      previous: never;
     }
   | {
       previous: number;
-      next: never;
     };
 
 export const constructPaginationString = ({
