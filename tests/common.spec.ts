@@ -20,17 +20,6 @@ test("constructs url with query params (limit only)", async () => {
   expect(result).toEqual(url + "?limit=10");
 });
 
-test("constructs url with query params (limit only)", async () => {
-  const url = "https://google.com";
-  const result = constructPaginationString({
-    url,
-    paginationParameters: {
-      limit: 10,
-    },
-  });
-  expect(result).toEqual(url + "?limit=10");
-});
-
 test("constructs url with query params (limit and next)", async () => {
   const url = "https://google.com";
   const result = constructPaginationString({
