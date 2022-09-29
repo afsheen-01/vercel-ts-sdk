@@ -8,7 +8,7 @@ beforeEach(() => {
 test("authorization demo", async () => {
   const { data, error } = await getUserTokens({
     limit: 10,
-    next: 10,
+    // next: 10,
   });
   console.log(data);
   console.log({ error });

@@ -1,12 +1,10 @@
 import fetch from "node-fetch";
-import {
-  asyncFetchWrapper,
-  config,
-  constructPaginationString,
-  endpointMap,
-  PaginationParameters,
-} from "./common";
+import { asyncFetchWrapper, config, endpointMap } from "./common";
 import { TokensResponse } from "./types/authorization";
+import {
+  constructPaginationString,
+  PaginationParameters,
+} from "./utils/pagination";
 
 export const getUserTokens = (paginationParameters?: PaginationParameters) => {
   const url = constructPaginationString({
