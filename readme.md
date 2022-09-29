@@ -18,6 +18,11 @@ $ yarn
 $ yarn build
 ```
 
+3. Add vercel token in terminal(important to run tests)
+```
+$ export VERCEL_TOKEN=${token}
+```
+
 3. Run the tests
 
 ```
