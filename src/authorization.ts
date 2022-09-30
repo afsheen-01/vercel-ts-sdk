@@ -11,7 +11,6 @@ export const getUserTokens = (paginationParameters?: PaginationParameters) => {
     url: endpointMap.userTokens,
     paginationParameters,
   });
-  if (debugMode) console.log("call made to url", url);
   return asyncFetchWrapper<TokensResponse>(() =>
     fetch(url, {
       method: "get",
@@ -21,12 +20,3 @@ export const getUserTokens = (paginationParameters?: PaginationParameters) => {
     })
   );
 };
-
-/* 
-getUserTokens()
-getUserTokens({ limit })
-getUserTokens({ limit, next })
-getUserTokens({ limit, prev })
-getUserTokens({ prev })
-getUserTokens({ next })
-*/
