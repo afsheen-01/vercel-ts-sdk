@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { asyncFetchWrapper, config, endpointMap } from "./common";
+import { asyncFetchWrapper, config, endpointMap, debugMode } from "./common";
 import { TokensResponse } from "./types/authorization";
 import {
   constructPaginationString,
@@ -11,6 +11,7 @@ export const getUserTokens = (paginationParameters?: PaginationParameters) => {
     url: endpointMap.userTokens,
     paginationParameters,
   });
+  if (debugMode) console.log("call made to url", url);
   return asyncFetchWrapper<TokensResponse>(() =>
     fetch(url, {
       method: "get",

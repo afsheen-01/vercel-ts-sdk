@@ -1,5 +1,7 @@
 import { FetchError, Response } from "node-fetch";
 
+export let debugMode = process.env?.DEBUG === "true";
+
 export let config: {
   [key: string]: string;
 } = {
