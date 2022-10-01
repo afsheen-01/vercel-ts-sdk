@@ -19,6 +19,7 @@ export const BASE_URL = "https://api.vercel.com";
 
 export const endpointMap = {
   userTokens: `${BASE_URL}/v5/user/tokens`,
+  createToken: `${BASE_URL}/v3/user/tokens`,
 };
 
 const nullIfUndefined = (val: any) => {
