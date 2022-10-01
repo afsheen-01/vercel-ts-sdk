@@ -11,12 +11,10 @@ export const getUserTokens = (paginationParameters?: PaginationParameters) => {
     url: endpointMap.userTokens,
     paginationParameters,
   });
-  return asyncFetchWrapper<TokensResponse>(() =>
-    fetch(url, {
+  return asyncFetchWrapper<TokensResponse>(url, {
       method: "get",
       headers: {
         ...config,
       },
     })
-  );
 };

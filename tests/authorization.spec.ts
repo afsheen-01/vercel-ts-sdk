@@ -14,7 +14,6 @@ test("get token (wrong token)", async () => {
 
 test("get token (right token)", async () => {
   const { data, error } = await getUserTokens();
-  console.log(error);
   expect(error).toBe(null);
   expect(data).not.toBe(null);
 });

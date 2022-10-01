@@ -1,4 +1,4 @@
-import { FetchError, Response } from "node-fetch";
+import fetch, {RequestInit, RequestInfo} from "node-fetch";
 
 export let debugMode = process.env?.DEBUG === "true";
 
@@ -54,7 +54,8 @@ class CustomError extends Error {
   }
 }
 export const asyncFetchWrapper = async <T>(
-  fetchFn: () => Promise<Response>
+  url: RequestInfo,
+  options?: RequestInit
 ) => {
   type WrapperError = {
     message: string;
@@ -65,7 +66,11 @@ export const asyncFetchWrapper = async <T>(
   let data: T | null = null,
     error: null | WrapperError = null;
   try {
-    const res = await fetchFn();
+
+    if (debugMode) {
+      console.log(options?.method?.toUpperCase() || "GET", url);
+    }
+    const res = await fetch(url, options);
     if (res.ok) {
       data = await res.json();
     } else {
