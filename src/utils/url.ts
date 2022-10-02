@@ -1,7 +1,10 @@
+import { RequestInfo } from "node-fetch";
+import { Primitives } from "../types/fetch";
+
 export const constructQueryString = (
   url: string,
-  query?: { [key: string]: string | number | boolean }
-) => {
+  query?: { [key: string]: Primitives }
+): string => {
   if (!query) {
     return url;
   }
