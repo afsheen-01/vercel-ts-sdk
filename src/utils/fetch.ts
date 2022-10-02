@@ -83,18 +83,18 @@ type _RequestInit = RequestInit & {
   data?: { [key: string]: any };
 };
 
-export const get = (url: string, options?: _RequestInit) => {
+export const get = <T>(url: string, options?: _RequestInit) => {
   const urlWithParams = constructQueryString(url, options?.query);
-  return asyncFetchWrapper(urlWithParams, {
+  return asyncFetchWrapper<T>(urlWithParams, {
     ...options,
     method: "get",
     headers: headersWithConfig(options?.headers),
   });
 };
 
-export const post = (url: string, options?: _RequestInit) => {
+export const post = <T>(url: string, options?: _RequestInit) => {
   const urlWithParams = constructQueryString(url, options?.query);
-  return asyncFetchWrapper(urlWithParams, {
+  return asyncFetchWrapper<T>(urlWithParams, {
     ...options,
     method: "post",
     headers: headersWithConfig(options?.headers),
@@ -102,9 +102,9 @@ export const post = (url: string, options?: _RequestInit) => {
   });
 };
 
-export const put = (url: string, options?: _RequestInit) => {
+export const put = <T>(url: string, options?: _RequestInit) => {
   const urlWithParams = constructQueryString(url, options?.query);
-  return asyncFetchWrapper(urlWithParams, {
+  return asyncFetchWrapper<T>(urlWithParams, {
     ...options,
     method: "put",
     headers: headersWithConfig(options?.headers),
@@ -112,9 +112,9 @@ export const put = (url: string, options?: _RequestInit) => {
   });
 };
 
-export const patch = (url: string, options?: _RequestInit) => {
+export const patch = <T>(url: string, options?: _RequestInit) => {
   const urlWithParams = constructQueryString(url, options?.query);
-  return asyncFetchWrapper(urlWithParams, {
+  return asyncFetchWrapper<T>(urlWithParams, {
     ...options,
     method: "patch",
     headers: headersWithConfig(options?.headers),
@@ -122,9 +122,9 @@ export const patch = (url: string, options?: _RequestInit) => {
   });
 };
 
-export const del = (url: string, options?: _RequestInit) => {
+export const del = <T>(url: string, options?: _RequestInit) => {
   const urlWithParams = constructQueryString(url, options?.query);
-  return asyncFetchWrapper(urlWithParams, {
+  return asyncFetchWrapper<T>(urlWithParams, {
     ...options,
     method: "delete",
     headers: headersWithConfig(options?.headers),
