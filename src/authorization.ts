@@ -1,13 +1,13 @@
 import { config, endpointMap, debugMode } from "./common";
-import { TokensResponse } from "./types/authorization";
-import { asyncFetchWrapper, CustomError, get, post } from "./utils/fetch";
+import { CreateAuthTokenResponse, TokensResponse } from "./types/authorization";
+import { asyncFetchWrapper, CustomError, del, get, post } from "./utils/fetch";
 import {
   constructPaginationString,
   PaginationParameters,
 } from "./utils/pagination";
 
 export const getUserTokens = (paginationParameters?: PaginationParameters) => {
-  return get(
+  return get<TokensResponse>(
     constructPaginationString({
       url: endpointMap.userTokens,
       paginationParameters,
@@ -28,7 +28,7 @@ export const createAuthToken = ({
     throw new CustomError({
       message: "`name` cannot be empty",
     });
-  return post(endpointMap.createToken, {
+  return post<CreateAuthTokenResponse>(endpointMap.createToken, {
     query: params,
     data: { name, expiresAt },
   });
