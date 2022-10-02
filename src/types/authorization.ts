@@ -48,6 +48,6 @@ export type TokensResponse = {
 };
 
 export type CreateAuthTokenResponse = {
-  tokens: AuthToken;
+  token: AuthToken;
   bearerToken: string;
 };
