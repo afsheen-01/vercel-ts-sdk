@@ -2,7 +2,7 @@ import { merge } from "lodash";
 import { config, debugMode, nullIfUndefined } from "../common";
 import { Primitives } from "../types/fetch";
 import { constructQueryString } from "./url";
-import fetch, { RequestInfo, RequestInit } from "node-fetch";
+import fetch, { FetchError, RequestInit, Response } from "node-fetch";
 
 const headersWithConfig = (headers: RequestInit["headers"]) =>
   merge({}, headers, config);
@@ -42,7 +42,8 @@ export const asyncFetchWrapper = async <T>(
     statusText: string | null;
   };
   let data: T | null = null,
-    error: null | WrapperError = null;
+    error: null | WrapperError = null,
+    response: FetchError | Response | null = null;
   try {
     if (debugMode) {
       console.log(options?.method?.toUpperCase() || "GET", url);
@@ -51,6 +52,7 @@ export const asyncFetchWrapper = async <T>(
       }
     }
     const res = await fetch(url, options);
+    response = res;
     if (res.ok) {
       data = await res.json();
     } else {
@@ -67,6 +69,7 @@ export const asyncFetchWrapper = async <T>(
     if (isCustomError) {
       error = e;
     } else {
+      response = error;
       error = {
         message: e?.toString() || "",
         errorData: e,
@@ -75,7 +78,7 @@ export const asyncFetchWrapper = async <T>(
       };
     }
   }
-  return { data, error };
+  return { data, error, response };
 };
 
 type _RequestInit = RequestInit & {
