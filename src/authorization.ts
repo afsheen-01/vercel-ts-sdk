@@ -33,3 +33,13 @@ export const createAuthToken = ({
     data: { name, expiresAt },
   });
 };
+
+export const deleteToken = ({ tokenId }: { tokenId: string }) => {
+  if (!tokenId)
+    throw new CustomError({
+      message: "`tokenId` cannot be empty",
+    });
+  return del<Pick<CreateAuthTokenResponse, "token">>(
+    `${endpointMap.deleteToken}/${tokenId}`
+  );
+};
