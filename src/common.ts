@@ -22,6 +22,9 @@ export const endpointMap = {
   createToken: `${BASE_URL}/v3/user/tokens`,
   deleteToken: `${BASE_URL}/v3/user/tokens`,
   getTokenMetadata: `${BASE_URL}/v5/user/tokens`,
+  getUser: `${BASE_URL}/v2/user`,
+  getUserEvents: `${BASE_URL}/v3/events`,
+  deleteUser: `${BASE_URL}/v1/user`,
 };
 
 export const nullIfUndefined = (val: any) => {

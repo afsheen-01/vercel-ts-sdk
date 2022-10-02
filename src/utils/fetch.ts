@@ -82,7 +82,7 @@ export const asyncFetchWrapper = async <T>(
 };
 
 type _RequestInit = RequestInit & {
-  query?: { [key: string]: Primitives };
+  query?: { [key: string]: Primitives | undefined };
   data?: { [key: string]: any };
 };
 
@@ -131,5 +131,6 @@ export const del = <T>(url: string, options?: _RequestInit) => {
     ...options,
     method: "delete",
     headers: headersWithConfig(options?.headers),
+    body: JSON.stringify(options?.data || {}),
   });
 };
