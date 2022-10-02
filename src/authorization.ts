@@ -43,3 +43,13 @@ export const deleteToken = ({ tokenId }: { tokenId: string }) => {
     `${endpointMap.deleteToken}/${tokenId}`
   );
 };
+
+export const getTokenMetadata = ({ tokenId }: { tokenId: string }) => {
+  if (!tokenId)
+    throw new CustomError({
+      message: "`tokenId` cannot be empty",
+    });
+  return get<Pick<CreateAuthTokenResponse, "token">>(
+    `${endpointMap.getTokenMetadata}/${tokenId}`
+  );
+};

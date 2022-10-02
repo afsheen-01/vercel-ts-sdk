@@ -1,5 +1,9 @@
 import { beforeEach, expect, test } from "@jest/globals";
-import { createAuthToken, deleteToken } from "../src/authorization";
+import {
+  createAuthToken,
+  deleteToken,
+  getTokenMetadata,
+} from "../src/authorization";
 import { setVercelToken, getUserTokens } from "../src/index";
 
 beforeEach(() => {
@@ -20,14 +24,19 @@ test("get token (right token)", async () => {
 });
 
 test("create a new token", async () => {
-  const { data, error } = await createAuthToken({ name: "SDK Test" });
+  const { data, error, response } = await createAuthToken({ name: "SDK Test" });
   expect(error).toBe(null);
   expect(data).not.toBe(null);
+
+  // clean-up
+  if (data?.token?.id) {
+    await deleteToken({ tokenId: data?.token?.id });
+  }
 });
 
 test("delete a token", async () => {
   const { data, error } = await createAuthToken({
-    name: "token to test delete function",
+    name: "token to test deleteToken function",
   });
   if (error) throw error;
   if (!data) throw new Error("No data returned from the response.");
@@ -37,4 +46,25 @@ test("delete a token", async () => {
   const { response, error: delError } = await deleteToken({ tokenId: id });
   expect(delError).toBe(null);
   expect(response?.status).toBe(200);
+});
+
+test("get token metadata", async () => {
+  const { data, error } = await createAuthToken({
+    name: "token to test getTokenMetadata function",
+  });
+  if (error) throw error;
+  if (!data) throw new Error("No data returned from the response.");
+  const {
+    token: { id },
+  } = data;
+  const { response, error: metadataError } = await getTokenMetadata({
+    tokenId: id,
+  });
+  expect(metadataError).toBe(null);
+  expect(response?.status).toBe(200);
+
+  // clean-up
+  if (id) {
+    await deleteToken({ tokenId: id });
+  }
 });
