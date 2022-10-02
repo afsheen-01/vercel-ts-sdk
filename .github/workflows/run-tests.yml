@@ -16,7 +16,7 @@ jobs:
     name: "Run tests"
     runs-on: ubuntu-latest
     env: 
-      VERCEL_TOKEN: abracadabra
+      VERCEL_TOKEN: ${{secrets.VERCEL_TOKEN}}
     steps:
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.5.0
