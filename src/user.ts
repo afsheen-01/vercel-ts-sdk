@@ -1,5 +1,5 @@
 import { endpointMap } from "./common";
-import { merge } from "lodash";
+import { omit } from "lodash";
 import {
   UserDeletionReason,
   UserEventParams,
@@ -14,12 +14,11 @@ export const getUser = () => {
 };
 
 export const getUserEvents = (query?: UserEventParams) => {
-  let formattedQuery: { [key: string]: Primitives | undefined } | undefined =
-    undefined;
+  let formattedQuery: { [key: string]: Primitives } | undefined = undefined;
   if (query) {
     formattedQuery = {
-      ...query,
-      types: query?.types?.join(",") || undefined,
+      ...omit(query, "types"),
+      ...(query?.types ? { types: query?.types?.join(",") } : null),
     };
   }
   return get<UserEventsResponse>(endpointMap.getUserEvents, {

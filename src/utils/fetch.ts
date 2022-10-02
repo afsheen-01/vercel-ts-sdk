@@ -82,7 +82,7 @@ export const asyncFetchWrapper = async <T>(
 };
 
 type _RequestInit = RequestInit & {
-  query?: { [key: string]: Primitives | undefined };
+  query?: { [key: string]: Primitives };
   data?: { [key: string]: any };
 };
 
