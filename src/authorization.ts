@@ -1,6 +1,6 @@
-import { config, endpointMap, debugMode } from "./common";
+import { endpointMap } from "./common";
 import { CreateAuthTokenResponse, TokensResponse } from "./types/authorization";
-import { asyncFetchWrapper, CustomError, del, get, post } from "./utils/fetch";
+import { CustomError, del, get, post } from "./utils/fetch";
 import {
   constructPaginationString,
   PaginationParameters,
