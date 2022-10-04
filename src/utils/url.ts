@@ -10,7 +10,7 @@ export const constructQueryString = (
   }
   const kvPairs = Object.entries(query);
   const params = kvPairs
-    .map((value) => `${value[0]}=${encodeURIComponent(value[1])}`)
+    .map((value) => `${value[0]}=${encodeURIComponent(value[1] as Primitives)}`)
     .join("&");
   return `${url}?${params}`;
 };

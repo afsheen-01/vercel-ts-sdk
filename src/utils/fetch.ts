@@ -131,5 +131,6 @@ export const del = <T>(url: string, options?: _RequestInit) => {
     ...options,
     method: "delete",
     headers: headersWithConfig(options?.headers),
+    body: JSON.stringify(options?.data || {}),
   });
 };

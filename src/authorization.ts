@@ -1,6 +1,6 @@
-import { config, endpointMap, debugMode } from "./common";
+import { endpointMap } from "./common";
 import { CreateAuthTokenResponse, TokensResponse } from "./types/authorization";
-import { asyncFetchWrapper, CustomError, del, get, post } from "./utils/fetch";
+import { CustomError, del, get, post } from "./utils/fetch";
 import {
   constructPaginationString,
   PaginationParameters,
@@ -32,4 +32,24 @@ export const createAuthToken = ({
     query: params,
     data: { name, expiresAt },
   });
+};
+
+export const deleteToken = ({ tokenId }: { tokenId: string }) => {
+  if (!tokenId)
+    throw new CustomError({
+      message: "`tokenId` cannot be empty",
+    });
+  return del<Pick<CreateAuthTokenResponse, "token">>(
+    `${endpointMap.deleteToken}/${tokenId}`
+  );
+};
+
+export const getTokenMetadata = ({ tokenId }: { tokenId: string }) => {
+  if (!tokenId)
+    throw new CustomError({
+      message: "`tokenId` cannot be empty",
+    });
+  return get<Pick<CreateAuthTokenResponse, "token">>(
+    `${endpointMap.getTokenMetadata}/${tokenId}`
+  );
 };
