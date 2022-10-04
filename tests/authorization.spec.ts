@@ -19,9 +19,8 @@ test("get token (right token)", async () => {
   expect(data).not.toBe(null);
 });
 
-test("get token (right token)", async () => {
-  const { data, error } = await createAuthToken();
-  console.log(data, error)
+test("create a new token", async () => {
+  const { data, error } = await createAuthToken({ name: "SDK Test" });
   expect(error).toBe(null);
   expect(data).not.toBe(null);
 });

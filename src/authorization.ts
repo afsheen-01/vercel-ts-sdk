@@ -1,32 +1,35 @@
-import fetch from "node-fetch";
-import { asyncFetchWrapper, config, endpointMap, debugMode } from "./common";
-import { TokensResponse } from "./types/authorization";
+import { config, endpointMap, debugMode } from "./common";
+import { CreateAuthTokenResponse, TokensResponse } from "./types/authorization";
+import { asyncFetchWrapper, CustomError, del, get, post } from "./utils/fetch";
 import {
   constructPaginationString,
   PaginationParameters,
 } from "./utils/pagination";
-import { constructQueryString } from "./utils/url";
 
 export const getUserTokens = (paginationParameters?: PaginationParameters) => {
-  const url = constructPaginationString({
-    url: endpointMap.userTokens,
-    paginationParameters,
-  });
-  return asyncFetchWrapper<TokensResponse>(url, {
-    method: "get",
-    headers: {
-      ...config,
-    },
-  });
+  return get<TokensResponse>(
+    constructPaginationString({
+      url: endpointMap.userTokens,
+      paginationParameters,
+    })
+  );
 };
 
-export const createAuthToken = (params?: { teamId: string }) => {
-  const url = constructQueryString(endpointMap.createToken, params);
-  return asyncFetchWrapper<TokensResponse>(url, {
-    method: "post",
-    headers: {
-      ...config,
-    },
-    body: JSON.stringify({name: "test"}),
+export const createAuthToken = ({
+  name,
+  expiresAt,
+  params,
+}: {
+  name: string;
+  expiresAt?: number;
+  params?: { teamId: string };
+}) => {
+  if (!name)
+    throw new CustomError({
+      message: "`name` cannot be empty",
+    });
+  return post<CreateAuthTokenResponse>(endpointMap.createToken, {
+    query: params,
+    data: { name, expiresAt },
   });
 };

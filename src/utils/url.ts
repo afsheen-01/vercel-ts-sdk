@@ -1,7 +1,10 @@
+import { RequestInfo } from "node-fetch";
+import { Primitives } from "../types/fetch";
+
 export const constructQueryString = (
   url: string,
-  query?: { [key: string]: string | number | boolean }
-) => {
+  query?: { [key: string]: Primitives }
+): string => {
   if (!query) {
     return url;
   }
@@ -11,13 +14,3 @@ export const constructQueryString = (
     .join("&");
   return `${url}?${params}`;
 };
-
-// constructQueryString(url, { param1: "something", param2: something })
-// constructQueryString(url, { param1: "something" });
-// constructQueryString(url, null);
-// // constructQueryString(url, {});
-
-// newURL = `${url}?param1=${param1}&param2=${param2}`[
-//     [
-//         ("param1=${param1}", "param2=${param2}")
-// ];
