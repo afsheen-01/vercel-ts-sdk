@@ -1,5 +1,5 @@
 import { endpointMap } from "./common";
-import { CreateAuthTokenResponse, TokensResponse } from "./types/authorization";
+import { CreateAuthTokenResponse, TokensResponse } from "./types";
 import { CustomError, del, get, post } from "./utils/fetch";
 import {
   constructPaginationString,

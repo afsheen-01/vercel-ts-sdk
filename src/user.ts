@@ -1,13 +1,13 @@
 import { endpointMap } from "./common";
 import { omit } from "lodash";
+import { del, get } from "./utils/fetch";
 import {
+  Primitives,
   UserDeletionReason,
   UserEventParams,
   UserEventsResponse,
   UserResponse,
-} from "./types/user";
-import { del, get } from "./utils/fetch";
-import { Primitives } from "./types/fetch";
+} from "./types";
 
 export const getUser = () => {
   return get<UserResponse>(endpointMap.getUser);

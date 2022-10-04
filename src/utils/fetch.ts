@@ -3,7 +3,6 @@ import { config, debugMode, nullIfUndefined } from "../common";
 import { Primitives } from "../types/fetch";
 import { constructQueryString } from "./url";
 import fetch, { FetchError, RequestInit, Response } from "node-fetch";
-
 const headersWithConfig = (headers: RequestInit["headers"]) =>
   merge({}, headers, config);
 
