@@ -6,3 +6,10 @@ export type {
   UserResponse,
   UserDeletionReason,
 } from "./user";
+export type {
+  ListAliasQueryParams,
+  ListAliasesResponse,
+  DeploymentAliasesResponse,
+  Alias,
+  NewAlias,
+} from "./alias";

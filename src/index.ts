@@ -6,3 +6,10 @@ export {
   deleteToken,
 } from "./authorization";
 export { getUser, getUserEvents, deleteUser } from "./user";
+export {
+  listAliases,
+  listDeploymentAliases,
+  deleteAlias,
+  assignAlias,
+  getAlias,
+} from "./alias";
