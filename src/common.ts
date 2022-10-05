@@ -23,6 +23,7 @@ export const endpointMap = {
   getUser: `${BASE_URL}/v2/user`,
   getUserEvents: `${BASE_URL}/v3/events`,
   deleteUser: `${BASE_URL}/v1/user`,
+  listDeployment: `${BASE_URL}/v6/deployments`,
 };
 
 export const nullIfUndefined = (val: any) => {
