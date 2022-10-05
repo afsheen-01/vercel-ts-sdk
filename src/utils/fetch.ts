@@ -30,16 +30,16 @@ export class CustomError extends Error {
     this.errorData = nullIfUndefined(errorData);
   }
 }
+export type WrapperError = {
+  message: string;
+  errorData: any;
+  status: number | null;
+  statusText: string | null;
+};
 export const asyncFetchWrapper = async <T>(
   url: string,
   options?: RequestInit
 ) => {
-  type WrapperError = {
-    message: string;
-    errorData: any;
-    status: number | null;
-    statusText: string | null;
-  };
   let data: T | null = null,
     error: null | WrapperError = null,
     response: FetchError | Response | null = null;
