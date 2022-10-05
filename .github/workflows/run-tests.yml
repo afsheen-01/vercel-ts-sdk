@@ -4,7 +4,8 @@ name: Tests
 
 # Controls when the workflow will run
 on:
-  pull_request: 
+  pull_request:
+    types: [opened, edited, reopened]
     branches:
       - main
 
@@ -15,7 +16,7 @@ jobs:
   run-tests:
     name: "Run tests"
     runs-on: ubuntu-latest
-    env: 
+    env:
       VERCEL_TOKEN: ${{secrets.VERCEL_TOKEN}}
     steps:
       - name: Setup Node.js environment
@@ -28,5 +29,3 @@ jobs:
         run: yarn
       - name: Run tests
         run: yarn test
-           
-    
