@@ -1,3 +1,5 @@
+import { Pagination } from "./common";
+
 /** Authentication token metadata. */
 interface AuthToken {
   /** The unique identifier of the token. */
@@ -30,15 +32,6 @@ interface AuthToken {
   activeAt: number;
   /** Timestamp (in milliseconds) of when the token was created. */
   createdAt: number;
-}
-
-interface Pagination {
-  /** Amount of items in the current page. */
-  count: number;
-  /** Timestamp that must be used to request the next page. */
-  next: number | null;
-  /** Timestamp that must be used to request the previous page. */
-  prev: number | null;
 }
 
 export type TokensResponse = {

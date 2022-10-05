@@ -40,7 +40,7 @@ export const deleteToken = ({ tokenId }: { tokenId: string }) => {
       message: "`tokenId` cannot be empty",
     });
   return del<Pick<CreateAuthTokenResponse, "token">>(
-    `${endpointMap.deleteToken}/${tokenId}`
+    `${endpointMap.deleteToken(tokenId)}`
   );
 };
 

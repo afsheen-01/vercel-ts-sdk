@@ -47,7 +47,10 @@ export const asyncFetchWrapper = async <T>(
     if (debugMode) {
       console.log(options?.method?.toUpperCase() || "GET", url);
       {
-        options?.body && console.log(`Request Body: ${options?.body}`);
+        options?.headers &&
+          console.log(`Headers: ${JSON.stringify(options?.headers)}`);
+        options?.body &&
+          console.log(`Request Body: ${JSON.stringify(options?.body)}`);
       }
     }
     const res = await fetch(url, options);
