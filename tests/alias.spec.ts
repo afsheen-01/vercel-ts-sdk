@@ -1,4 +1,4 @@
-import { beforeEach, expect, test } from "@jest/globals";
+import { beforeAll, beforeEach, expect, test } from "@jest/globals";
 import { getDeploymentsList } from "../src/deployments";
 import {
   listAliases,
@@ -8,13 +8,23 @@ import {
   getAlias,
   listDeploymentAliases,
 } from "../src";
-import { DeploymentList } from "../src/types/deployment";
-import { FetchError } from "node-fetch";
 import { WrapperError } from "../src/utils/fetch";
+import { DeploymentList } from "../src/types/deployment";
 
-beforeEach(() => {
+let dplList: DeploymentList | null = null,
+  dplError: WrapperError | null = null;
+
+beforeAll(async () => {
+  // set vercel token for tests
   setVercelToken(process.env.VERCEL_TOKEN as string);
+
+  // get and set deployment ID
+  const { data, error } = await getDeploymentsList();
+  dplList = data;
+  dplError = error;
 });
+
+beforeEach(() => {});
 
 const checkForData = ({
   data,
@@ -82,10 +92,9 @@ test("get alias", async () => {
 });
 
 test("assign alias", async () => {
-  const { data, error: deploymentListError } = await getDeploymentsList();
   return checkForData({
-    data,
-    error: deploymentListError,
+    data: dplList,
+    error: dplError,
     key: "deployments",
     callback: async () => {
       const {
@@ -93,7 +102,7 @@ test("assign alias", async () => {
         response,
         error,
       } = await assignAlias({
-        id: data?.deployments[0]?.uid || "",
+        id: dplList?.deployments[0]?.uid || "",
         alias: "vercelsdktest1",
       });
       if (error) console.log(error);
@@ -105,21 +114,20 @@ test("assign alias", async () => {
         console.warn(
           "The alias created in the test could not be deleted. Make sure you delete this manually."
         );
-        console.warn(`Alias info: ${JSON.stringify(data)}`);
+        console.warn(`Alias info: ${JSON.stringify(alias)}`);
       }
     },
   });
 });
 
 test("delete alias", async () => {
-  const { data: dplData, error: dplError } = await getDeploymentsList();
   return checkForData({
-    data: dplData,
+    data: dplList,
     error: dplError,
     key: "deployments",
     callback: async () => {
       const { data, error: createError } = await assignAlias({
-        id: dplData?.deployments[0]?.uid || "",
+        id: dplList?.deployments[0]?.uid || "",
         alias: "vercelsdktest2",
       });
       if (createError) throw createError;
