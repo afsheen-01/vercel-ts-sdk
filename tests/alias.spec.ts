@@ -1,5 +1,5 @@
 import { beforeAll, beforeEach, expect, test } from "@jest/globals";
-import { getDeploymentsList } from "../src/deployments";
+import { listDeployments } from "../src/deployments";
 import {
   listAliases,
   setVercelToken,
@@ -19,12 +19,10 @@ beforeAll(async () => {
   setVercelToken(process.env.VERCEL_TOKEN as string);
 
   // get and set deployment ID
-  const { data, error } = await getDeploymentsList();
+  const { data, error } = await listDeployments();
   dplList = data;
   dplError = error;
 });
-
-beforeEach(() => {});
 
 const checkForData = ({
   data,
@@ -56,13 +54,12 @@ test("list all aliases", async () => {
 });
 
 test("list all deployment aliases", async () => {
-  const { data, error: deploymentListError } = await getDeploymentsList();
   return checkForData({
-    data,
-    error: deploymentListError,
+    data: dplList,
+    error: dplError,
     key: "deployments",
     callback: async () => {
-      const id = data?.deployments[0]?.uid || "";
+      const id = dplList?.deployments[0]?.uid || "";
       const { error, response } = await listDeploymentAliases({
         id,
       });
