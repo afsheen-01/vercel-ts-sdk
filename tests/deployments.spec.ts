@@ -1,6 +1,6 @@
 import { beforeEach, expect, test } from "@jest/globals";
 import { constructPaginationString } from "../src/utils/pagination";
-import { getDeploymentsList } from "../src/deployments";
+import { listDeployment } from "../src/deployments";
 import { setVercelToken } from "../src";
 
 beforeEach(() => {
@@ -8,7 +8,7 @@ beforeEach(() => {
 });
 
 test("calling just the get deployment endpoint", async () => {
-  const { response, error } = await getDeploymentsList();
+  const { response, error } = await listDeployment();
   if (error) console.log(error);
   expect(error).toBe(null);
   expect(response?.status).toBe(200);

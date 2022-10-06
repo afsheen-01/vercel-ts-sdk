@@ -23,7 +23,7 @@ export const endpointMap = {
   getUser: `${BASE_URL}/v2/user`,
   getUserEvents: `${BASE_URL}/v3/events`,
   deleteUser: `${BASE_URL}/v1/user`,
-  listDeployment: `${BASE_URL}/v6/deployments`,
+  deploymentList: `${BASE_URL}/v6/deployments`,
   listAliases: `${BASE_URL}/v4/aliases`,
   listDeploymentAliases: (id: string) =>
     `${BASE_URL}/v2/deployments/${id}/aliases`,

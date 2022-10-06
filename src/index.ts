@@ -13,3 +13,4 @@ export {
   assignAlias,
   getAlias,
 } from "./alias";
+export { listDeployment } from "./deployments";
