@@ -39,8 +39,7 @@ const checkForData = ({
 }): void => {
   if (error) {
     console.log("hit an error in dependency");
-    console.log(error);
-    return;
+    throw error;
   }
   if (data && data[key]?.length === 0) {
     console.log("no data found to run the tests on");
