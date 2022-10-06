@@ -36,7 +36,7 @@ const checkForData = ({
     console.log("no data found to run the tests on");
     return;
   }
-  callback();
+  return callback();
 };
 
 test("list all aliases", async () => {
@@ -48,7 +48,7 @@ test("list all aliases", async () => {
 
 test("list all deployment aliases", async () => {
   const { data, error: deploymentListError } = await getDeploymentsList();
-  checkForData({
+  return checkForData({
     data,
     error: deploymentListError,
     key: "deployments",
@@ -66,7 +66,7 @@ test("list all deployment aliases", async () => {
 
 test("get alias", async () => {
   const { data, error: listAliasError } = await listAliases();
-  checkForData({
+  return checkForData({
     data,
     error: listAliasError,
     key: "aliases",
@@ -83,7 +83,7 @@ test("get alias", async () => {
 
 test("assign alias", async () => {
   const { data, error: deploymentListError } = await getDeploymentsList();
-  checkForData({
+  return checkForData({
     data,
     error: deploymentListError,
     key: "deployments",
@@ -113,7 +113,7 @@ test("assign alias", async () => {
 
 test("delete alias", async () => {
   const { data: dplData, error: dplError } = await getDeploymentsList();
-  checkForData({
+  return checkForData({
     data: dplData,
     error: dplError,
     key: "deployments",
