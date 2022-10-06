@@ -2,7 +2,7 @@ import { get } from "./utils/fetch";
 import { endpointMap } from "./common";
 import { DeploymentList } from "./types/deployment";
 
-type listDeploymentParams = {
+type ListDeploymentsParams = {
   app?: string;
   from?: number;
   limit?: number;
@@ -23,8 +23,8 @@ type listDeploymentParams = {
   users?: string;
 };
 
-export const listDeployment = (params?: listDeploymentParams) => {
-  return get<DeploymentList>(endpointMap.deploymentList, {
+export const listDeployments = (params?: ListDeploymentsParams) => {
+  return get<DeploymentList>(endpointMap.listDeployments, {
     query: params,
   });
 };
