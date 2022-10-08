@@ -31,6 +31,15 @@ export const endpointMap = {
   getAlias: (id: string) => `${BASE_URL}/v4/aliases/${id}`,
   deleteAlias: (id: string) => `${BASE_URL}/v2/aliases/${id}`,
   assignAlias: (id: string) => `${BASE_URL}/v2/deployments/${id}/aliases`,
+  listTeams: `${BASE_URL}/v2/teams`,
+  createTeam: `${BASE_URL}/v1/teams`,
+  deleteTeam: (teamId: string) => `${BASE_URL}/v1/teams/${teamId}`,
+  deleteTeamInviteCode: (params: { teamId: string; inviteId: string }) =>
+    `${BASE_URL}/v1/teams/${params.teamId}/invites/${params.inviteId}`,
+  getTeam: (teamId: string) => `${BASE_URL}/v2/teams/${teamId}`,
+  getAccessRequestStatus: (params: { teamId: string; userId: string }) =>
+    `${BASE_URL}/v1/teams/${params.teamId}/request/${params.userId}`,
+  inviteUser: (teamId: string) => `${BASE_URL}/v1/teams/${teamId}/members`,
 };
 
 export const nullIfUndefined = (val: any) => {
