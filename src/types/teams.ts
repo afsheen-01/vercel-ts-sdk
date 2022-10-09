@@ -172,3 +172,168 @@ export type InviteUserResponse = {
   /** The role used for the invitation */
   role: string;
 };
+
+export interface JoinTeamResponse {
+  /** The ID of the team the user joined. */
+  teamId: string;
+  /** The slug of the team the user joined. */
+  slug: string;
+  /** The name of the team the user joined. */
+  name: string;
+  /** The origin of how the user joined. */
+  from: string;
+}
+
+export type Role = ListTeamMembersResponse["members"][number]["role"];
+export interface ListTeamMembersResponse {
+  members: {
+    /** ID of the file for the Avatar of this member. */
+    avatar?: string;
+    /** Boolean that indicates if this member was confirmed by an owner. */
+    confirmed: boolean;
+    /** The email of this member. */
+    email: string;
+    /** Information about the GitHub account for this user. */
+    github?: {
+      userId?: number;
+      accountId?: string;
+      email?: string;
+      login?: string;
+    };
+    /** Information about the GitLab account of this user. */
+    gitlab?: {
+      userId?: number;
+      accountId?: string;
+      email?: string;
+      login?: string;
+    };
+    /** Information about the Bitbucket account of this user. */
+    bitbucket?: {
+      userId?: number;
+      accountId?: string;
+      email?: string;
+      login?: string;
+    };
+    /** Role of this user in the team. */
+    role: "OWNER" | "MEMBER" | "VIEWER" | "DEVELOPER" | "BILLING";
+    /** The ID of this user. */
+    uid: string;
+    /** The unique username of this user. */
+    username: string;
+    /** The name of this user. */
+    name?: string;
+    /** Timestamp in milliseconds when this member was added. */
+    createdAt: number;
+    /** Timestamp in milliseconds for when this team member was accepted by an owner. */
+    accessRequestedAt?: number;
+    /** Map with information about the members origin if they joined by requesting access. */
+    joinedFrom?: {
+      origin:
+        | "import"
+        | "gitlab"
+        | "bitbucket"
+        | "github"
+        | "mail"
+        | "link"
+        | "teams"
+        | "saml"
+        | "dsync"
+        | "feedback";
+      commitId?: string;
+      repoId?: string;
+      repoPath?: string;
+      gitUserId?: string | number;
+      gitUserLogin?: string;
+      ssoUserId?: string;
+      ssoConnectedAt?: number;
+      idpUserId?: string;
+      dsyncUserId?: string;
+      dsyncConnectedAt?: number;
+    };
+  }[];
+  emailInviteCodes?: {
+    id: string;
+    email?: string;
+    role: "OWNER" | "MEMBER" | "VIEWER" | "DEVELOPER" | "BILLING";
+    createdAt?: number;
+  }[];
+  pagination: {
+    hasNext: boolean;
+    /** Amount of items in the current page. */
+    count: number;
+    /** Timestamp that must be used to request the next page. */
+    next: number | null;
+    /** Timestamp that must be used to request the previous page. */
+    prev: number | null;
+  };
+}
+
+export type Origin = JoinedFrom["origin"];
+
+export type JoinedFrom = Exclude<
+  ListTeamMembersResponse["members"][number]["joinedFrom"],
+  undefined
+>;
+
+export interface RequestAccessResponse {
+  teamSlug: string;
+  teamName: string;
+  confirmed?: boolean;
+  joinedFrom?: {
+    origin:
+      | "import"
+      | "teams"
+      | "github"
+      | "gitlab"
+      | "bitbucket"
+      | "feedback"
+      | "mail"
+      | "link"
+      | "saml"
+      | "dsync";
+    commitId?: string;
+    repoId?: string;
+    repoPath?: string;
+    gitUserId?: string | number;
+    gitUserLogin?: string;
+    ssoUserId?: string;
+    ssoConnectedAt?: number;
+    idpUserId?: string;
+    dsyncUserId?: string;
+    dsyncConnectedAt?: number;
+  };
+  accessRequestedAt?: number;
+  github: {
+    login?: string;
+  } | null;
+  gitlab: {
+    login?: string;
+  } | null;
+  bitbucket: {
+    login?: string;
+  } | null;
+}
+
+export type UpdateTeamRequestBody =
+  | {
+      avatar?: string;
+      description?: string;
+      emailDomain?: string;
+      enablePreviewFeedback?: string;
+      name?: string;
+      previewDeploymentSuffix?: string;
+      regenerateInviteCode?: string;
+      remoteCaching?: RemoteCaching;
+      saml?: SAML;
+      slug?: string;
+    }
+  | undefined;
+
+type RemoteCaching = {
+  enabled?: boolean;
+};
+
+type SAML = {
+  enforced?: boolean;
+  roles: any;
+};

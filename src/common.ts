@@ -40,6 +40,16 @@ export const endpointMap = {
   getAccessRequestStatus: (params: { teamId: string; userId: string }) =>
     `${BASE_URL}/v1/teams/${params.teamId}/request/${params.userId}`,
   inviteUser: (teamId: string) => `${BASE_URL}/v1/teams/${teamId}/members`,
+  joinTeam: (teamId: string) =>
+    `${BASE_URL}/v1/teams/${teamId}/members/teams/join`,
+  listTeamMembers: (teamId: string) => `${BASE_URL}/v2/teams/${teamId}/members`,
+  removeTeamMember: (params: { teamId: string; userId: string }) =>
+    `${BASE_URL}/v1/teams/${params.teamId}/members/${params.userId}`,
+  updateTeamMember: (params: { teamId: string; userId: string }) =>
+    `${BASE_URL}/v1/teams/${params.teamId}/members/${params.userId}`,
+  requestAccessToTeam: (teamId: string) =>
+    `${BASE_URL}/v1/teams/${teamId}/request`,
+  updateTeam: (teamId: string) => `${BASE_URL}/v2/teams/${teamId}`,
 };
 
 export const nullIfUndefined = (val: any) => {

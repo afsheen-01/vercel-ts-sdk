@@ -14,3 +14,18 @@ export {
   getAlias,
 } from "./alias";
 export { listDeployments } from "./deployments";
+export {
+  listTeamMembers,
+  listTeams,
+  getAccessRequestStatus,
+  getTeam,
+  requestAccessToTeam,
+  createTeam,
+  deleteTeam,
+  deleteTeamInviteCode,
+  inviteUser,
+  joinTeam,
+  removeTeamMember,
+  updateTeam,
+  updateTeamMember,
+} from "./teams";
