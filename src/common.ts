@@ -50,6 +50,10 @@ export const endpointMap = {
   requestAccessToTeam: (teamId: string) =>
     `${BASE_URL}/v1/teams/${teamId}/request`,
   updateTeam: (teamId: string) => `${BASE_URL}/v2/teams/${teamId}`,
+  uploadCert: `${BASE_URL}/v7/certs`,
+  getCert: (certId: string) => `${BASE_URL}/v7/certs/${certId}`,
+  deleteCert: (certId: string) => `${BASE_URL}/v7/certs/${certId}`,
+  issueCert: `${BASE_URL}/v7/certs`,
 };
 
 export const nullIfUndefined = (val: any) => {
