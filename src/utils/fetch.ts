@@ -2,7 +2,7 @@ import { merge } from "lodash";
 import { config, debugMode, nullIfUndefined } from "../common";
 import { Primitives } from "../types/fetch";
 import { constructQueryString } from "./url";
-import fetch, { FetchError, RequestInit, Response } from "node-fetch";
+import fetch, { RequestInit, Response } from "node-fetch";
 import { PaginationParameters } from "../types/pagination";
 const headersWithConfig = (headers: RequestInit["headers"]) =>
   merge({}, headers, config);
@@ -37,13 +37,19 @@ export type WrapperError = {
   status: number | null;
   statusText: string | null;
 };
+
+type AsyncFetchResponse<T> = {
+  data: T | null;
+  error: WrapperError | null;
+  response: Response | null;
+};
 export const asyncFetchWrapper = async <T>(
   url: string,
   options?: RequestInit
-) => {
-  let data: T | null = null,
-    error: null | WrapperError = null,
-    response: FetchError | Response | null = null;
+): Promise<AsyncFetchResponse<T>> => {
+  let data = null,
+    error = null,
+    response = null;
   try {
     if (debugMode) {
       console.log(options?.method?.toUpperCase() || "GET", url);
