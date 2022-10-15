@@ -20,14 +20,14 @@ export const uploadCert = (params: {
 
 export const getCert = (params: { teamId?: string; id: string }) => {
   const { id, teamId } = params;
-  return get<Cert>(`${endpointMap.getCert}/${id}`, {
+  return get<Cert>(endpointMap.getCert(id), {
     ...(teamId && { query: { teamId } }),
   });
 };
 
 export const deleteCert = (params: { teamId?: string; id: string }) => {
   const { id, teamId } = params;
-  return del<{}>(`${endpointMap.deleteCert}/${id}`, {
+  return del<{}>(endpointMap.deleteCert(id), {
     ...(teamId && { query: { teamId } }),
   });
 };
@@ -39,5 +39,3 @@ export const issueNewCert = (params?: { teamId?: string; cns?: string[] }) => {
     ...(cns && { data: { cns } }),
   });
 };
-
-export {};

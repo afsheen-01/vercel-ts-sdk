@@ -29,3 +29,4 @@ export {
   updateTeam,
   updateTeamMember,
 } from "./teams";
+export { uploadCert, getCert, deleteCert, issueNewCert } from "./certs";
