@@ -18,7 +18,7 @@
   },
   "scripts": {
     "dev": "yarn ts-node",
-    "typecheck": "yarn tsc --noEmit",
+    "typecheck": "yarn tsc -p tsconfig.test.json --noEmit",
     "build": "yarn clean && yarn generate-defs && yarn parcel-build",
     "clean": "rm -rf dist",
     "generate-defs": "yarn tsc -p tsconfig.json",

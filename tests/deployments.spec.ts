@@ -1,5 +1,4 @@
 import { beforeEach, expect, test } from "@jest/globals";
-import { constructPaginationString } from "../src/utils/pagination";
 import { listDeployments } from "../src/deployments";
 import { setVercelToken } from "../src";
 
