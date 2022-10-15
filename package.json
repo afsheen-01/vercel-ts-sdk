@@ -23,7 +23,7 @@
     "clean": "rm -rf dist",
     "generate-defs": "yarn tsc -p tsconfig.json",
     "parcel-build": "yarn parcel build ./src/index.ts",
-    "test": "yarn typecheck && yarn jest"
+    "test": "yarn jest"
   },
   "devDependencies": {
     "@jest/globals": "^29.0.3",
