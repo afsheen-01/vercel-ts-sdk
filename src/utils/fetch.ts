@@ -1,8 +1,8 @@
-import { merge } from "lodash";
+import { merge, omit } from "lodash";
 import { config, debugMode, nullIfUndefined } from "../common";
 import { Primitives } from "../types/fetch";
 import { constructQueryString } from "./url";
-import fetch, { FetchError, RequestInit, Response } from "node-fetch";
+import fetch, { RequestInit, Response } from "node-fetch";
 import { PaginationParameters } from "../types/pagination";
 const headersWithConfig = (headers: RequestInit["headers"]) =>
   merge({}, headers, config);
@@ -37,13 +37,19 @@ export type WrapperError = {
   status: number | null;
   statusText: string | null;
 };
+
+type AsyncFetchResponse<T> = {
+  data: T | null;
+  error: WrapperError | null;
+  response: Response | null;
+};
 export const asyncFetchWrapper = async <T>(
   url: string,
   options?: RequestInit
-) => {
-  let data: T | null = null,
-    error: null | WrapperError = null,
-    response: FetchError | Response | null = null;
+): Promise<AsyncFetchResponse<T>> => {
+  let data = null,
+    error = null,
+    response = null;
   try {
     if (debugMode) {
       console.log(options?.method?.toUpperCase() || "GET", url);
@@ -91,10 +97,15 @@ type _RequestInit = RequestInit & {
   data?: { [key: string]: any };
 };
 
+const removeQueryAndData = (options?: _RequestInit): RequestInit => {
+  if (!omit) return {};
+  return omit(options, ["query", "data"]);
+};
+
 export const get = <T>(url: string, options?: _RequestInit) => {
   const urlWithParams = constructQueryString(url, options?.query);
   return asyncFetchWrapper<T>(urlWithParams, {
-    ...options,
+    ...removeQueryAndData(options),
     method: "get",
     headers: headersWithConfig(options?.headers),
   });
@@ -103,7 +114,7 @@ export const get = <T>(url: string, options?: _RequestInit) => {
 export const post = <T>(url: string, options?: _RequestInit) => {
   const urlWithParams = constructQueryString(url, options?.query);
   return asyncFetchWrapper<T>(urlWithParams, {
-    ...options,
+    ...removeQueryAndData(options),
     method: "post",
     headers: headersWithConfig(options?.headers),
     body: JSON.stringify(options?.data || {}),
@@ -113,7 +124,7 @@ export const post = <T>(url: string, options?: _RequestInit) => {
 export const put = <T>(url: string, options?: _RequestInit) => {
   const urlWithParams = constructQueryString(url, options?.query);
   return asyncFetchWrapper<T>(urlWithParams, {
-    ...options,
+    ...removeQueryAndData(options),
     method: "put",
     headers: headersWithConfig(options?.headers),
     body: JSON.stringify(options?.data || {}),
@@ -123,7 +134,7 @@ export const put = <T>(url: string, options?: _RequestInit) => {
 export const patch = <T>(url: string, options?: _RequestInit) => {
   const urlWithParams = constructQueryString(url, options?.query);
   return asyncFetchWrapper<T>(urlWithParams, {
-    ...options,
+    ...removeQueryAndData(options),
     method: "patch",
     headers: headersWithConfig(options?.headers),
     body: JSON.stringify(options?.data || {}),
@@ -133,7 +144,7 @@ export const patch = <T>(url: string, options?: _RequestInit) => {
 export const del = <T>(url: string, options?: _RequestInit) => {
   const urlWithParams = constructQueryString(url, options?.query);
   return asyncFetchWrapper<T>(urlWithParams, {
-    ...options,
+    ...removeQueryAndData(options),
     method: "delete",
     headers: headersWithConfig(options?.headers),
     body: JSON.stringify(options?.data || {}),

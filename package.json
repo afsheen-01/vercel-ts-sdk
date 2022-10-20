@@ -4,7 +4,6 @@
   "license": "MIT",
   "source": "src/index.ts",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "dependencies": {
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.6",
@@ -19,7 +18,11 @@
   },
   "scripts": {
     "dev": "yarn ts-node",
-    "build": "yarn parcel build ./src/index.ts",
+    "typecheck": "yarn tsc -p tsconfig.test.json --noEmit",
+    "build": "yarn clean && yarn generate-defs && yarn parcel-build",
+    "clean": "rm -rf dist",
+    "generate-defs": "yarn tsc -p tsconfig.json",
+    "parcel-build": "yarn parcel build ./src/index.ts",
     "test": "yarn jest"
   },
   "devDependencies": {
@@ -48,5 +51,9 @@
     "ts-node": "^10.9.1",
     "url": "^0.11.0",
     "util": "^0.12.4"
-  }
+  },
+  "files": [
+    "dist",
+    "readme.md"
+  ]
 }

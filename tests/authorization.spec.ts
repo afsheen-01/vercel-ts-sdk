@@ -6,6 +6,7 @@ import {
 } from "../src/authorization";
 import { setVercelToken, getUserTokens } from "../src/index";
 
+// cant use beforeAll because we explicitly set a wrong token in the first test
 beforeEach(() => {
   setVercelToken(process.env.VERCEL_TOKEN as string);
 });

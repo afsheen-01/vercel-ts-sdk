@@ -1,9 +1,8 @@
-import { beforeEach, expect, test } from "@jest/globals";
-import { constructPaginationString } from "../src/utils/pagination";
+import { beforeAll, expect, test } from "@jest/globals";
 import { listDeployments } from "../src/deployments";
 import { setVercelToken } from "../src";
 
-beforeEach(() => {
+beforeAll(() => {
   setVercelToken(process.env?.VERCEL_TOKEN as string);
 });
 

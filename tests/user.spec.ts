@@ -1,8 +1,8 @@
-import { beforeEach, expect, test } from "@jest/globals";
+import { beforeAll, expect, test } from "@jest/globals";
 import { setVercelToken } from "../src";
 import { deleteUser, getUser, getUserEvents } from "../src/user";
 
-beforeEach(() => {
+beforeAll(() => {
   setVercelToken(process.env?.VERCEL_TOKEN as string);
 });
 
