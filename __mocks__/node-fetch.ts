@@ -1,5 +1,4 @@
 import { Response } from "node-fetch";
-import { deleteUser } from "../src";
 import { CustomError } from "../src/utils/fetch";
 
 export default (url, options) => {
