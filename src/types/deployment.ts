@@ -26,13 +26,11 @@ export type GetDeploymentEventParams = {
   delimiter: number;
   direction: string;
   follow: number;
-  limit: number;
   name: string;
   since: number;
   statusCode: number | string;
   teamId: string;
-  until: number;
-};
+} & PaginationParameters;
 
 export interface DeploymentListResponse {
   pagination: Pagination;
