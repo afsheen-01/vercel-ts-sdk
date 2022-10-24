@@ -1,4 +1,4 @@
-import { Pagination } from "./pagination";
+import { Pagination, PaginationParameters } from "./pagination";
 
 export type ListTeamsResponse = {
   teams: (Team | TeamLimited)[];
@@ -336,4 +336,69 @@ type RemoteCaching = {
 type SAML = {
   enforced?: boolean;
   roles: any;
+};
+
+export type ListTeamsParams = {
+  since?: number;
+} & PaginationParameters;
+
+export type CreateTeamParams = { slug: string; name?: string };
+
+export type DeleteTeamParams = {
+  teamId: string;
+  reasons?: DeleteTeamReasons[];
+};
+
+export type DeleteTeamInviteCodeParams = {
+  teamId: string;
+  inviteId: string;
+};
+
+export type GetTeamParams = { teamId: string };
+
+export type GetAccessRequestStatusParams = {
+  teamId: string;
+  userId: string;
+};
+
+export type InviteUserParams = {
+  teamId: string;
+  email?: string;
+  role?: Role;
+  uid?: string;
+};
+
+export type JoinTeamParams = { teamId: string; inviteCode?: string };
+
+export type ListTeamMembersParams = {
+  teamId: string;
+  excludeProject?: string;
+  role?: Role;
+  search?: string;
+  since?: number;
+} & PaginationParameters;
+
+export type RemoveTeamMemberParams = {
+  teamId: string;
+  userId: string;
+};
+
+export type RequestAccessToTeamParams = {
+  teamId: string;
+  joinedFrom: Pick<
+    JoinedFrom,
+    "origin" | "commitId" | "gitUserId" | "gitUserLogin" | "repoId" | "repoPath"
+  >;
+};
+
+export type UpdateTeamParams = {
+  teamId: string;
+} & UpdateTeamRequestBody;
+
+export type UpdateTeamMemberParams = {
+  teamId: string;
+  userId: string;
+  confirmed?: boolean;
+  joinedFrom?: Pick<JoinedFrom, "ssoUserId">;
+  role?: Role;
 };

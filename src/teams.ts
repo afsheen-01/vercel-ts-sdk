@@ -2,101 +2,87 @@ import { endpointMap } from "./common";
 import { PaginationParameters } from "./types/pagination";
 import {
   AccessRequestResponse,
+  CreateTeamParams,
+  DeleteTeamInviteCodeParams,
+  DeleteTeamParams,
   DeleteTeamReasons,
+  GetAccessRequestStatusParams,
+  GetTeamParams,
+  InviteUserParams,
   InviteUserResponse,
   JoinedFrom,
+  JoinTeamParams,
   JoinTeamResponse,
+  ListTeamMembersParams,
   ListTeamMembersResponse,
+  ListTeamsParams,
   ListTeamsResponse,
+  RemoveTeamMemberParams,
   RequestAccessResponse,
+  RequestAccessToTeamParams,
   Role,
   Team,
+  UpdateTeamMemberParams,
+  UpdateTeamParams,
   UpdateTeamRequestBody,
 } from "./types/teams";
 import { del, get, patch, post } from "./utils/fetch";
 
-export const listTeams = (
-  params?: {
-    since?: number;
-  } & PaginationParameters
-) => {
+export const listTeams = (params?: ListTeamsParams) => {
   return get<ListTeamsResponse>(endpointMap.listTeams, {
     ...(Object.keys(params || {}).length > 0 && { query: params }),
   });
 };
 
-export const createTeam = (params: { slug: string; name?: string }) => {
+export const createTeam = (params: CreateTeamParams) => {
   return post<{ id: string }>(endpointMap.createTeam, {
     data: params,
   });
 };
 
-export const deleteTeam = (params: {
-  teamId: string;
-  reasons?: DeleteTeamReasons[];
-}) => {
+export const deleteTeam = (params: DeleteTeamParams) => {
   const { teamId, reasons } = params;
   return del<{ id: string }>(endpointMap.deleteTeam(teamId), {
     ...(reasons?.length && { data: { reasons } }),
   });
 };
 
-export const deleteTeamInviteCode = (params: {
-  teamId: string;
-  inviteId: string;
-}) => {
+export const deleteTeamInviteCode = (params: DeleteTeamInviteCodeParams) => {
   return del<{ id: string }>(endpointMap.deleteTeamInviteCode(params));
 };
 
-export const getTeam = (params: { teamId: string }) => {
+export const getTeam = (params: GetTeamParams) => {
   return get<Team>(endpointMap.getTeam(params.teamId));
 };
 
-export const getAccessRequestStatus = (params: {
-  teamId: string;
-  userId: string;
-}) => {
+export const getAccessRequestStatus = (
+  params: GetAccessRequestStatusParams
+) => {
   return get<AccessRequestResponse>(endpointMap.getAccessRequestStatus(params));
 };
 
-export const inviteUser = (params: {
-  teamId: string;
-  email?: string;
-  role?: Role;
-  uid?: string;
-}) => {
+export const inviteUser = (params: InviteUserParams) => {
   const { teamId, ...rest } = params;
   return post<InviteUserResponse>(endpointMap.inviteUser(teamId), {
     ...(Object.keys(rest).length > 0 && { data: rest }),
   });
 };
 
-export const joinTeam = (params: { teamId: string; inviteCode?: string }) => {
+export const joinTeam = (params: JoinTeamParams) => {
   const { teamId, inviteCode } = params;
   return post<JoinTeamResponse>(endpointMap.joinTeam(teamId), {
     ...(inviteCode && { data: { teamId, inviteCode } }),
   });
 };
 
-export const listTeamMembers = (
-  params: {
-    teamId: string;
-    excludeProject?: string;
-    role?: Role;
-    search?: string;
-    since?: number;
-  } & PaginationParameters
-) => {
+export const listTeamMembers = (params: ListTeamMembersParams) => {
   const { teamId, ...rest } = params;
   return get<ListTeamMembersResponse>(endpointMap.listTeamMembers(teamId), {
     ...(Object.keys(rest).length && { query: rest }),
   });
 };
 
-export const removeTeamMember = (params: {
-  teamId: string;
-  userId: string;
-}) => {
+export const removeTeamMember = (params: RemoveTeamMemberParams) => {
   const { teamId, userId } = params;
   return del<{ id: string }>(
     endpointMap.removeTeamMember({
@@ -106,36 +92,20 @@ export const removeTeamMember = (params: {
   );
 };
 
-export const requestAccessToTeam = (params: {
-  teamId: string;
-  joinedFrom: Pick<
-    JoinedFrom,
-    "origin" | "commitId" | "gitUserId" | "gitUserLogin" | "repoId" | "repoPath"
-  >;
-}) => {
+export const requestAccessToTeam = (params: RequestAccessToTeamParams) => {
   return post<RequestAccessResponse>(
     endpointMap.requestAccessToTeam(params.teamId)
   );
 };
 
-export const updateTeam = (
-  params: {
-    teamId: string;
-  } & UpdateTeamRequestBody
-) => {
+export const updateTeam = (params: UpdateTeamParams) => {
   const { teamId, ...rest } = params;
   return patch<Team>(endpointMap.updateTeam(teamId), {
     ...(Object.keys(rest).length && { data: rest }),
   });
 };
 
-export const updateTeamMember = (params: {
-  teamId: string;
-  userId: string;
-  confirmed?: boolean;
-  joinedFrom?: Pick<JoinedFrom, "ssoUserId">;
-  role?: Role;
-}) => {
+export const updateTeamMember = (params: UpdateTeamMemberParams) => {
   const { teamId, userId, ...rest } = params;
   return patch<{ id: string }>(
     endpointMap.updateTeamMember({ teamId, userId }),
