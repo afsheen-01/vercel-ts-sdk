@@ -9,9 +9,7 @@
     "node-fetch": "^2.6.6",
     "parcel": "^2.7.0",
     "sanctuary": "^3.1.0",
-    "typescript": "^4.8.3",
-    "zod": "^3.19.1",
-    "zod-validation-error": "^0.2.1"
+    "typescript": "^4.8.3"
   },
   "targets": {
     "main": {
@@ -51,7 +49,6 @@
     "stream-http": "^3.2.0",
     "ts-jest": "^29.0.2",
     "ts-node": "^10.9.1",
-    "ts-to-zod": "^1.13.1",
     "url": "^0.11.0",
     "util": "^0.12.4"
   },

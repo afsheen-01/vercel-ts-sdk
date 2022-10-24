@@ -1,7 +1,7 @@
 import { Pagination } from "./pagination";
 
 /** Authentication token metadata. */
-export interface AuthToken {
+interface AuthToken {
   /** The unique identifier of the token. */
   id: string;
   /** The human-readable name of the token. */
@@ -44,9 +44,3 @@ export type CreateAuthTokenResponse = {
   token: AuthToken;
   bearerToken: string;
 };
-
-export interface CreateAuthTokenParams {
-  name: string;
-  expiresAt?: number;
-  teamId?: string;
-}
