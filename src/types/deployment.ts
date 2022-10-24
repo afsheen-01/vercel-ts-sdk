@@ -21,7 +21,7 @@ export type ListDeploymentsParams = {
 } & PaginationParameters;
 
 export type GetDeploymentEventParams = {
-  deploymentIdOrUrl: string;
+  deploymentIdOrURL: string;
   builds: number;
   delimiter: number;
   direction: string;

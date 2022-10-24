@@ -41,9 +41,9 @@ export const listDeploymentBuilds = (params: {
 };
 
 export const getDeploymentEvents = (params: GetDeploymentEventParams) => {
-  const { deploymentIdOrUrl, ...rest } = params;
+  const { deploymentIdOrURL, ...rest } = params;
   return get<GetDeploymentEventsResponse>(
-    endpointMap.getDeploymentEvents(deploymentIdOrUrl),
+    endpointMap.getDeploymentEvents(deploymentIdOrURL),
     {
       ...(rest && { query: rest }),
     }
@@ -51,12 +51,12 @@ export const getDeploymentEvents = (params: GetDeploymentEventParams) => {
 };
 
 export const getDeployment = (params: {
-  deploymentIdOrUrl: string;
+  deploymentIdOrURL: string;
   teamId?: string;
 }) => {
-  const { deploymentIdOrUrl, teamId } = params;
+  const { deploymentIdOrURL, teamId } = params;
   return get<GetDeploymentResponse>(
-    endpointMap.getDeployment(deploymentIdOrUrl),
+    endpointMap.getDeployment(deploymentIdOrURL),
     {
       ...(teamId && { query: { teamId } }),
     }
