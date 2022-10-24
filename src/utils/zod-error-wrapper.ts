@@ -1,6 +1,6 @@
 import { Response } from "node-fetch";
 import Zod from "zod";
-import { CustomError, WrapperError } from "./fetch";
+import { CustomError, FetchResponse, WrapperError } from "./fetch";
 
 export const validateSchema = ({
   schema,
@@ -27,11 +27,7 @@ export const validateSchema = ({
 
 export const returnValidationError = (
   errorMsg: string
-): {
-  data: null;
-  error: WrapperError;
-  response: Response;
-} => {
+): FetchResponse<null> => {
   const errorObject = new CustomError({ message: errorMsg });
   return {
     data: null,
