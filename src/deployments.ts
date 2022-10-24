@@ -2,6 +2,9 @@ import { get } from "./utils/fetch";
 import { endpointMap } from "./common";
 import {
   DeploymentListResponse,
+  GetDeploymentEventParams,
+  GetDeploymentEventsResponse,
+  GetDeploymentResponse,
   ListDeploymentBuildsResponse,
   ListDeploymentFilesResponse,
   ListDeploymentsParams,
@@ -35,4 +38,38 @@ export const listDeploymentBuilds = (params: {
       ...(teamId && { query: { teamId } }),
     }
   );
+};
+
+export const getDeploymentEvents = (params: GetDeploymentEventParams) => {
+  const { deploymentIdOrUrl, ...rest } = params;
+  return get<GetDeploymentEventsResponse>(
+    endpointMap.getDeploymentEvents(deploymentIdOrUrl),
+    {
+      ...(rest && { query: rest }),
+    }
+  );
+};
+
+export const getDeployment = (params: {
+  deploymentIdOrUrl: string;
+  teamId?: string;
+}) => {
+  const { deploymentIdOrUrl, teamId } = params;
+  return get<GetDeploymentResponse>(
+    endpointMap.getDeployment(deploymentIdOrUrl),
+    {
+      ...(teamId && { query: { teamId } }),
+    }
+  );
+};
+
+export const getDeploymentFileContents = (params: {
+  deploymentId: string;
+  fileId: string;
+  teamId?: string;
+}) => {
+  const { deploymentId, fileId, teamId } = params;
+  return get<{}>(endpointMap.getDeploymentFileContents(deploymentId, fileId), {
+    ...(teamId && { query: { teamId } }),
+  });
 };
