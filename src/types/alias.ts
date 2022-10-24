@@ -1,16 +1,15 @@
-import { Pagination } from "./pagination";
+import { Pagination, PaginationParameters } from "./pagination";
 
 export type ListAliasQueryParams = {
   domain?: string;
   from?: number;
-  limit?: number;
   projectId?: string;
   rollbackDeploymentId?: string;
   since?: number;
   teamId?: string;
-  until?: number;
-};
-export interface Alias {
+} & PaginationParameters;
+
+interface Alias {
   /** The alias name, it could be a `.vercel.app` subdomain or a custom domain */
   alias: string;
   /** The date when the alias was created */
@@ -70,7 +69,7 @@ export interface DeploymentAliasesResponse {
   }[];
 }
 
-export interface NewAlias {
+export interface NewAliasResponse {
   /** The unique identifier of the alias */
   uid: string;
   /** The assigned alias name */
@@ -80,3 +79,27 @@ export interface NewAlias {
   /** The unique identifier of the previously aliased deployment, only received when the alias was used before */
   oldDeploymentId?: string | null;
 }
+
+export type ListDeploymentAliasesParams = {
+  deploymentId: string;
+  teamId?: string;
+};
+
+export type GetAliasParams = {
+  aliasId: string;
+  from?: number;
+  projectId?: string;
+  since?: number;
+  teamId?: string;
+} & PaginationParameters;
+
+export type DeleteAliasParams = { aliasId: string; teamId?: string };
+
+export type AssignAliasParams = {
+  aliasId: string;
+  teamId?: string;
+  alias?: string;
+  redirect?: string;
+};
+
+export interface GetAliasResponse extends Alias {}

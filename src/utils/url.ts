@@ -1,4 +1,3 @@
-// import { RequestInfo } from "node-fetch";
 import { Primitives } from "../types/fetch";
 
 export const constructQueryString = (
@@ -6,6 +5,9 @@ export const constructQueryString = (
   query?: { [key: string]: Primitives }
 ): string => {
   if (!query) {
+    return url;
+  }
+  if (!Object.keys(query).length) {
     return url;
   }
   const kvPairs = Object.entries(query);
