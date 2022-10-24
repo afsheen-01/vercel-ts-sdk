@@ -1,4 +1,3 @@
-// import { RequestInfo } from "node-fetch";
 import { Primitives } from "../types/fetch";
 
 export const constructQueryString = (

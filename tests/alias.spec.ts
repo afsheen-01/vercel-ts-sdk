@@ -8,8 +8,8 @@ import {
   getAlias,
   listDeploymentAliases,
 } from "../src";
-import { WrapperError } from "../src/utils/fetch";
 import { DeploymentList } from "../src/types/deployment";
+import { WrapperError } from "../src/types/fetch";
 
 let dplList: DeploymentList | null = null,
   dplError: WrapperError | null = null;
@@ -59,9 +59,9 @@ test("list all deployment aliases", async () => {
     error: dplError,
     key: "deployments",
     callback: async () => {
-      const id = dplList?.deployments[0]?.uid || "";
+      const deploymentId = dplList?.deployments[0]?.uid || "";
       const { error, response } = await listDeploymentAliases({
-        id,
+        deploymentId,
       });
       if (error) console.log(error);
       expect(error).toBe(null);
@@ -78,7 +78,7 @@ test("get alias", async () => {
     key: "aliases",
     callback: async () => {
       const { response, error } = await getAlias({
-        id: data?.aliases[0]?.uid || "",
+        aliasId: data?.aliases[0]?.uid || "",
       });
       if (error) console.log(error);
       expect(error).toBe(null);
@@ -98,14 +98,16 @@ test("assign alias", async () => {
         response,
         error,
       } = await assignAlias({
-        id: dplList?.deployments[0]?.uid || "",
+        aliasId: dplList?.deployments[0]?.uid || "",
         alias: "vercelsdktest1",
       });
       if (error) console.log(error);
       expect(error).toBe(null);
       expect(response?.status).toBe(200);
       // clean-up
-      const { error: delErr } = await deleteAlias({ id: alias?.uid || "" });
+      const { error: delErr } = await deleteAlias({
+        aliasId: alias?.uid || "",
+      });
       if (delErr) {
         console.warn(
           "The alias created in the test could not be deleted. Make sure you delete this manually."
@@ -123,12 +125,12 @@ test("delete alias", async () => {
     key: "deployments",
     callback: async () => {
       const { data, error: createError } = await assignAlias({
-        id: dplList?.deployments[0]?.uid || "",
+        aliasId: dplList?.deployments[0]?.uid || "",
         alias: "vercelsdktest2",
       });
       if (createError) throw createError;
       const { response, error } = await deleteAlias({
-        id: data?.uid || "",
+        aliasId: data?.uid || "",
       });
       if (error) console.log(error);
       expect(error).toBe(null);

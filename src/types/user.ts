@@ -397,3 +397,5 @@ export type UserDeletionReason = {
   description: string;
   slug: string;
 };
+
+export type DeleteUserParams = { reasons: UserDeletionReason[] };

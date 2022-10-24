@@ -1,8 +1,8 @@
 import { merge, omit } from "lodash";
 import { config, debugMode, nullIfUndefined } from "../common";
-import { Primitives } from "../types/fetch";
+import { AsyncFetchResponse, Primitives, WrapperError } from "../types/fetch";
 import { constructQueryString } from "./url";
-import fetch, { RequestInit, Response } from "node-fetch";
+import fetch, { RequestInit } from "node-fetch";
 import { PaginationParameters } from "../types/pagination";
 const headersWithConfig = (headers: RequestInit["headers"]) =>
   merge({}, headers, config);
@@ -31,18 +31,7 @@ export class CustomError extends Error {
     this.errorData = nullIfUndefined(errorData);
   }
 }
-export type WrapperError = {
-  message: string;
-  errorData: any;
-  status: number | null;
-  statusText: string | null;
-};
 
-type AsyncFetchResponse<T> = {
-  data: T | null;
-  error: WrapperError | null;
-  response: Response | null;
-};
 export const asyncFetchWrapper = async <T>(
   url: string,
   options?: RequestInit

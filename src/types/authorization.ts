@@ -44,3 +44,13 @@ export type CreateAuthTokenResponse = {
   token: AuthToken;
   bearerToken: string;
 };
+
+export type GetUserTokenParams = {};
+export type CreateAuthTokenParams = {
+  name: string;
+  expiresAt?: number;
+  params?: { teamId: string };
+};
+
+export type DeleteTokenParams = { tokenId: string };
+export type GetTokenMetadataParams = { tokenId: string };

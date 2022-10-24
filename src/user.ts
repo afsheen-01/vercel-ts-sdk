@@ -2,12 +2,12 @@ import { endpointMap } from "./common";
 import { omit } from "lodash";
 import { del, get } from "./utils/fetch";
 import {
-  Primitives,
-  UserDeletionReason,
   UserEventParams,
   UserEventsResponse,
   UserResponse,
-} from "./types";
+} from "./types/user";
+import { DeleteUserParams } from "./types/user";
+import { Primitives } from "./types/fetch";
 
 export const getUser = () => {
   return get<UserResponse>(endpointMap.getUser);
@@ -26,7 +26,7 @@ export const getUserEvents = (query?: UserEventParams) => {
   });
 };
 
-export const deleteUser = (params?: { reasons: UserDeletionReason[] }) => {
+export const deleteUser = (params?: DeleteUserParams) => {
   return del<{}>(endpointMap.deleteUser, {
     ...(params?.reasons ? { data: { reasons: params?.reasons } } : null),
   });
