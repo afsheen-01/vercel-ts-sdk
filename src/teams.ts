@@ -1,16 +1,13 @@
 import { endpointMap } from "./common";
-import { PaginationParameters } from "./types/pagination";
 import {
   AccessRequestResponse,
   CreateTeamParams,
   DeleteTeamInviteCodeParams,
   DeleteTeamParams,
-  DeleteTeamReasons,
   GetAccessRequestStatusParams,
   GetTeamParams,
   InviteUserParams,
   InviteUserResponse,
-  JoinedFrom,
   JoinTeamParams,
   JoinTeamResponse,
   ListTeamMembersParams,
@@ -20,11 +17,9 @@ import {
   RemoveTeamMemberParams,
   RequestAccessResponse,
   RequestAccessToTeamParams,
-  Role,
   Team,
   UpdateTeamMemberParams,
   UpdateTeamParams,
-  UpdateTeamRequestBody,
 } from "./types/teams";
 import { del, get, patch, post } from "./utils/fetch";
 
