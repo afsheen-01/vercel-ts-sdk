@@ -3,7 +3,7 @@ import { setVercelToken } from "../src";
 import { deleteUser, getUser, getUserEvents } from "../src/user";
 
 beforeAll(() => {
-  setVercelToken(process.env?.VERCEL_TOKEN as string);
+  setVercelToken(process.env?.VERCEL_TOKEN);
 });
 
 test("get current user", async () => {
@@ -14,7 +14,7 @@ test("get current user", async () => {
 });
 
 test("get user events (no query params)", async () => {
-  const { error, response, data } = await getUserEvents();
+  const { error, response } = await getUserEvents();
   if (error) console.log(error);
   expect(error).toBe(null);
   expect(response?.status).toBe(200);
@@ -22,11 +22,19 @@ test("get user events (no query params)", async () => {
 
 test("get user events (types as array)", async () => {
   const { error, response, data } = await getUserEvents({
-    types: ["env_var_name"],
+    types: ["bold"],
   });
   if (error) console.log(error);
   expect(error).toBe(null);
   expect(response?.status).toBe(200);
+});
+
+test("get user events (types as array but invalid value)", async () => {
+  const { error, response, data } = await getUserEvents({
+    types: ["jumba"],
+  });
+  expect(error).not.toBe(null);
+  expect(data).toBe(null);
 });
 
 test("initiate delete user workflow (should receive email for the testing user)", async () => {

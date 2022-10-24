@@ -1,19 +1,33 @@
 import { endpointMap } from "./common";
 import { omit } from "lodash";
-import { del, get } from "./utils/fetch";
+import { CustomError, del, get } from "./utils/fetch";
+import { Primitives } from "./types";
 import {
-  Primitives,
   UserDeletionReason,
   UserEventParams,
   UserEventsResponse,
   UserResponse,
-} from "./types";
+} from "./types/user";
+import {
+  returnValidationError,
+  validateSchema,
+} from "./utils/zod-error-wrapper";
+import { userEventParamsSchema } from "./schema/user";
 
 export const getUser = () => {
   return get<UserResponse>(endpointMap.getUser);
 };
 
 export const getUserEvents = (query?: UserEventParams) => {
+  if (query) {
+    const { error } = validateSchema({
+      schema: userEventParamsSchema,
+      data: query,
+    });
+    if (error) {
+      return returnValidationError(error);
+    }
+  }
   let formattedQuery: { [key: string]: Primitives } | undefined = undefined;
   if (query) {
     formattedQuery = {
