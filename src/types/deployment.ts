@@ -20,7 +20,7 @@ export type ListDeploymentsParams = {
   users?: string;
 } & PaginationParameters;
 
-export interface DeploymentList {
+export interface DeploymentListResponse {
   pagination: Pagination;
   deployments: {
     /** The unique identifier of the deployment. */
@@ -81,4 +81,23 @@ export interface DeploymentList {
     /** Deployment can be used for instant rollback */
     isRollbackCandidate?: boolean | null;
   }[];
+}
+export type ListDeploymentFilesResponse = FileTree[];
+
+/** A deployment file tree entry */
+interface FileTree {
+  /** The name of the file tree entry */
+  name: string;
+  /** String indicating the type of file tree entry. */
+  type: "directory" | "file" | "symlink" | "lambda" | "middleware" | "invalid";
+  /** The unique identifier of the file (only valid for the `file` type) */
+  uid?: string;
+  /** The list of children files of the directory (only valid for the `directory` type) */
+  children?: FileTree[];
+  /** The content-type of the file (only valid for the `file` type) */
+  contentType?: string;
+  /** The file "mode" indicating file type and permissions. */
+  mode: number;
+  /** Not currently used. See `file-list-to-tree.ts`. */
+  symlink?: string;
 }
