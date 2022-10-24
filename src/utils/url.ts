@@ -7,6 +7,9 @@ export const constructQueryString = (
   if (!query) {
     return url;
   }
+  if (!Object.keys(query).length) {
+    return url;
+  }
   const kvPairs = Object.entries(query);
   const params = kvPairs
     .map(

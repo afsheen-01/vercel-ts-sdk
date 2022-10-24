@@ -9,7 +9,7 @@ import { PaginationParameters } from "./types/pagination";
 import { del, get, post } from "./utils/fetch";
 
 export const getUserTokens = (paginationParameters?: PaginationParameters) => {
-  return get<TokensResponse>(endpointMap.userTokens, {
+  return get<TokensResponse>(endpointMap.getUserTokens, {
     ...(paginationParameters && { query: paginationParameters }),
   });
 };
@@ -19,7 +19,7 @@ export const createAuthToken = ({
   expiresAt,
   params,
 }: CreateAuthTokenParams) => {
-  return post<CreateAuthTokenResponse>(endpointMap.createToken, {
+  return post<CreateAuthTokenResponse>(endpointMap.createAuthToken, {
     query: params,
     data: { name, expiresAt },
   });
@@ -33,6 +33,6 @@ export const deleteToken = ({ tokenId }: DeleteTokenParams) => {
 
 export const getTokenMetadata = ({ tokenId }: GetTokenMetadataParams) => {
   return get<Pick<CreateAuthTokenResponse, "token">>(
-    `${endpointMap.getTokenMetadata}/${tokenId}`
+    `${endpointMap.getTokenMetadata(tokenId)}`
   );
 };
