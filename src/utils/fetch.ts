@@ -38,7 +38,7 @@ export type WrapperError = {
   statusText: string | null;
 };
 
-type AsyncFetchResponse<T> = {
+export type FetchResponse<T> = {
   data: T | null;
   error: WrapperError | null;
   response: Response | null;
@@ -46,7 +46,7 @@ type AsyncFetchResponse<T> = {
 export const asyncFetchWrapper = async <T>(
   url: string,
   options?: RequestInit
-): Promise<AsyncFetchResponse<T>> => {
+): Promise<FetchResponse<T>> => {
   let data = null,
     error = null,
     response = null;
