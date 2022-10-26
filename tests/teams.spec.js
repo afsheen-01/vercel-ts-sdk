@@ -10,7 +10,11 @@ import {
   joinTeam,
   listTeamMembers,
   listTeams,
+  removeTeamMember,
+  requestAccessToTeam,
   setVercelToken,
+  updateTeam,
+  updateTeamMember,
 } from "../src/index";
 
 beforeAll(() => setVercelToken(process?.env?.VERCEL_TOKEN));
@@ -158,4 +162,72 @@ test("list team members", async () => {
     search: "search-string",
     until: "1234",
   });
+});
+
+test("remove team member", async () => {
+  const { data, error } = await removeTeamMember({
+    teamId: "team1",
+    userId: "user1",
+  });
+  if (error) console.log(error);
+  expect(error).toBe(null);
+  expect(data?.url).toContain(
+    endpointMap.removeTeamMember({
+      teamId: "team1",
+      userId: "user1",
+    })
+  );
+});
+
+test("request access to team", async () => {
+  const { data, error } = await requestAccessToTeam({
+    teamId: "team1",
+    joinedFrom: "origin",
+  });
+  if (error) console.log(error);
+  expect(error).toBe(null);
+  expect(data?.url).toContain(endpointMap.requestAccessToTeam("team1"));
+  expect(data?.body).toEqual(
+    JSON.stringify({
+      joinedFrom: "origin",
+    })
+  );
+});
+
+test("update team", async () => {
+  const body = {
+    avatar: "avatar",
+    description: "desc",
+    name: "team-name",
+    slug: "team-slug",
+  };
+  const { data, error } = await updateTeam({
+    teamId: "team1",
+    ...body,
+  });
+  if (error) console.log(error);
+  expect(error).toBe(null);
+  expect(data?.url).toContain(endpointMap.updateTeam("team1"));
+  expect(data?.body).toEqual(JSON.stringify(body));
+});
+
+test("update team member", async () => {
+  const body = {
+    joinedFrom: "origin",
+    role: "MEMBER",
+  };
+  const { data, error } = await updateTeamMember({
+    teamId: "team1",
+    userId: "user1",
+    ...body,
+  });
+  if (error) console.log(error);
+  expect(error).toBe(null);
+  expect(data?.url).toContain(
+    endpointMap.updateTeamMember({
+      teamId: "team1",
+      userId: "user1",
+    })
+  );
+  expect(data?.body).toEqual(JSON.stringify(body));
 });

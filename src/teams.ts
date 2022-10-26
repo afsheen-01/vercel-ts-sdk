@@ -89,7 +89,10 @@ export const removeTeamMember = (params: RemoveTeamMemberParams) => {
 
 export const requestAccessToTeam = (params: RequestAccessToTeamParams) => {
   return post<RequestAccessResponse>(
-    endpointMap.requestAccessToTeam(params.teamId)
+    endpointMap.requestAccessToTeam(params.teamId),
+    {
+      data: { joinedFrom: params?.joinedFrom },
+    }
   );
 };
 
