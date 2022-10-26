@@ -12,19 +12,32 @@ $ cd <cloned folder>
 $ yarn
 ```
 
-2. Build the project once (mandatory if you want to run tests)
+2. Build the project (optional)
 
 ```
 $ yarn build
 ```
 
-3. Add vercel token in terminal(important to run tests)
-```
-$ export VERCEL_TOKEN=${token}
-```
-
-4. Run the tests
+3. Run the tests
 
 ```
 $ yarn test
 ```
+
+---
+
+### Roadmap
+
+v0.1:
+
+- [ ] Support all endpoints.
+- [ ] Mocked tests for all exported functions.
+
+v0.2:
+
+- [ ] Support advanced deployments (ie combination of multiple APIs).
+- [ ] Input validation.
+
+v0.3:
+
+- [ ] Real tests that call the API.
