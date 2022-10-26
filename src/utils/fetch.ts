@@ -106,7 +106,7 @@ export const post = <T>(url: string, options?: _RequestInit) => {
     ...removeQueryAndData(options),
     method: "post",
     headers: headersWithConfig(options?.headers),
-    body: JSON.stringify(options?.data || {}),
+    ...(options?.data && { body: JSON.stringify(options?.data || {}) }),
   });
 };
 
@@ -116,7 +116,7 @@ export const put = <T>(url: string, options?: _RequestInit) => {
     ...removeQueryAndData(options),
     method: "put",
     headers: headersWithConfig(options?.headers),
-    body: JSON.stringify(options?.data || {}),
+    ...(options?.data && { body: JSON.stringify(options?.data || {}) }),
   });
 };
 
@@ -126,7 +126,7 @@ export const patch = <T>(url: string, options?: _RequestInit) => {
     ...removeQueryAndData(options),
     method: "patch",
     headers: headersWithConfig(options?.headers),
-    body: JSON.stringify(options?.data || {}),
+    ...(options?.data && { body: JSON.stringify(options?.data || {}) }),
   });
 };
 
@@ -136,6 +136,6 @@ export const del = <T>(url: string, options?: _RequestInit) => {
     ...removeQueryAndData(options),
     method: "delete",
     headers: headersWithConfig(options?.headers),
-    body: JSON.stringify(options?.data || {}),
+    ...(options?.data && { body: JSON.stringify(options?.data || {}) }),
   });
 };
