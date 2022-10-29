@@ -7,7 +7,7 @@ import {
   listDeploymentAliases,
   deleteAlias,
 } from "../src";
-import { endpointMap } from "../src/common";
+import { endpointMap } from "../src/utils/common";
 
 beforeAll(async () => {
   // set vercel token for tests

@@ -1,4 +1,4 @@
-import { endpointMap } from "./common";
+import { endpointMap } from "./utils/common";
 import {
   ListAliasQueryParams,
   ListAliasesResponse,

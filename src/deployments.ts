@@ -1,5 +1,5 @@
 import { get } from "./utils/fetch";
-import { endpointMap } from "./common";
+import { endpointMap } from "./utils/common";
 import { DeploymentList, ListDeploymentsParams } from "./types/deployment";
 
 export const listDeployments = (params?: ListDeploymentsParams) => {

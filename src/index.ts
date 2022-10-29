@@ -1,32 +1,32 @@
-export { setVercelToken } from "./common";
-export {
-  getUserTokens,
-  createAuthToken,
-  getTokenMetadata,
-  deleteToken,
-} from "./authorization";
-export { getUser, getUserEvents, deleteUser } from "./user";
+export { setVercelToken } from "./utils/common";
 export {
   listAliases,
   listDeploymentAliases,
+  getAlias,
   deleteAlias,
   assignAlias,
-  getAlias,
 } from "./alias";
+export {
+  getUserTokens,
+  createAuthToken,
+  deleteToken,
+  getTokenMetadata,
+} from "./authorization";
+export { uploadCert, getCert, removeCert, issueNewCert } from "./certs";
 export { listDeployments } from "./deployments";
 export {
-  listTeamMembers,
   listTeams,
-  getAccessRequestStatus,
-  getTeam,
-  requestAccessToTeam,
   createTeam,
   deleteTeam,
   deleteTeamInviteCode,
+  getTeam,
+  getAccessRequestStatus,
   inviteUser,
   joinTeam,
+  listTeamMembers,
   removeTeamMember,
+  requestAccessToTeam,
   updateTeam,
   updateTeamMember,
 } from "./teams";
-export { uploadCert, getCert, removeCert, issueNewCert } from "./certs";
+export { getUser, getUserEvents, deleteUser } from "./user";

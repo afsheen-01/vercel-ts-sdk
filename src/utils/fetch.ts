@@ -1,5 +1,5 @@
 import { merge, omit } from "lodash";
-import { config, debugMode, nullIfUndefined } from "../common";
+import { config, debugMode, nullIfUndefined } from "./common";
 import { AsyncFetchResponse, Primitives, WrapperError } from "../types/fetch";
 import { constructQueryString } from "./url";
 import fetch, { RequestInit } from "node-fetch";

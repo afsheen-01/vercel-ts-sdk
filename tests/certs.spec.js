@@ -6,7 +6,7 @@ import {
   setVercelToken,
   uploadCert,
 } from "../src";
-import { endpointMap } from "../src/common";
+import { endpointMap } from "../src/utils/common";
 
 beforeAll(() => {
   setVercelToken(process?.env?.VERCEL_TOKEN);
