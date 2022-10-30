@@ -54,6 +54,11 @@ export const endpointMap = {
   getCert: (certId: string) => `${BASE_URL}/v7/certs/${certId}`,
   deleteCert: (certId: string) => `${BASE_URL}/v7/certs/${certId}`,
   issueCert: `${BASE_URL}/v7/certs`,
+  addDomainToProject: (idOrName: string) =>
+    `${BASE_URL}/v9/projects/${idOrName}/domains`,
+  createNewProject: `${BASE_URL}/v9/projects`,
+  createEnvVars: (id: string) => `${BASE_URL}/v9/projects/${id}/env`,
+  deleteProject: (id: string) => `${BASE_URL}/v9/projects/${id}`,
 };
 
 export const nullIfUndefined = (val: any) => {

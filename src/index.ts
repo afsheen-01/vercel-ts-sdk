@@ -15,6 +15,12 @@ export {
 export { uploadCert, getCert, removeCert, issueNewCert } from "./certs";
 export { listDeployments } from "./deployments";
 export {
+  addDomainToProject,
+  createNewProject,
+  createEnvVars,
+  deleteProject,
+} from "./projects";
+export {
   listTeams,
   createTeam,
   deleteTeam,
