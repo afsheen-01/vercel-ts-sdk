@@ -1,3 +1,5 @@
+import { Pagination, PaginationParameters } from "./pagination";
+
 export type AddDomainToProjectParams = {
   projectId: string;
   teamId?: string;
@@ -113,9 +115,7 @@ export interface CreateNewProjectResponse {
   directoryListing: boolean;
   installCommand?: string | null;
   env?: {
-    target?:
-      | ("production" | "preview" | "development")[]
-      | ("production" | "preview" | "development");
+    target?: Target[] | Target;
     type: "secret" | "system" | "encrypted" | "plain";
     id?: string;
     key: string;
@@ -413,7 +413,7 @@ type EnvVar = {
   key: string;
   value: string;
   type: "system" | "secret" | "encrypted" | "plain";
-  target?: ("production" | "preview" | "deployment")[];
+  target?: Target[];
 };
 export type CreateEnvVarsParams =
   | ({
@@ -429,21 +429,7 @@ export type CreateEnvVarsParams =
 
 export type CreateEnvVarsResponse =
   | {
-      target?:
-        | (
-            | "production"
-            | "preview"
-            | "development"
-            | "preview"
-            | "development"
-          )[]
-        | (
-            | "production"
-            | "preview"
-            | "development"
-            | "preview"
-            | "development"
-          );
+      target?: Target[] | Target;
       type: "secret" | "system" | "encrypted" | "plain";
       id?: string;
       key: string;
@@ -459,10 +445,8 @@ export type CreateEnvVarsResponse =
       decrypted?: boolean;
     }[]
   | {
-      target?:
-        | ("production" | "preview" | "development")[]
-        | ("production" | "preview" | "development");
-      type?: "secret" | "system" | "encrypted" | "plain";
+      target?: Target[] | Target;
+      type: "secret" | "system" | "encrypted" | "plain";
       id?: string;
       key?: string;
       value?: string;
@@ -481,4 +465,101 @@ export type CreateEnvVarsResponse =
 export type DeleteProjectParams = {
   projectId: string;
   teamId?: string;
+};
+
+type Target = "production" | "preview" | "development";
+
+export type EditEnvVarParams = {
+  projectId: string;
+  envId: string;
+  teamId?: string;
+  gitBranch?: string;
+  key: string;
+  target: Target[];
+  type: string;
+  value: string;
+};
+
+export interface EditEnvVarResponse {
+  target?: Target[] | Target;
+  type: "system" | "encrypted" | "plain" | "secret";
+  id?: string;
+  key: string;
+  value: string;
+  configurationId?: string | null;
+  createdAt?: number;
+  updatedAt?: number;
+  createdBy?: string | null;
+  updatedBy?: string | null;
+  gitBranch?: string;
+  edgeConfigId?: string | null;
+  /** Whether `value` is decrypted. */
+  decrypted?: boolean;
+}
+
+export type FindProjectByIdParams = {
+  projectId: string;
+  teamId?: string;
+};
+
+export interface FindProjectByIdResponse extends CreateNewProjectResponse {
+  permissions?: CreateNewProjectResponse["permissions"] & {
+    aliasProtectionBypass?: ACLAction[];
+  };
+}
+
+export type GetProjectDomainParams = {
+  projectId: string;
+  domain: string;
+  teamId?: string;
+};
+
+export interface GetProjectDomainResponse {
+  name: string;
+  apexName: string;
+  projectId: string;
+  redirect?: string | null;
+  redirectStatusCode?: (307 | 301 | 302 | 308) | null;
+  gitBranch?: string | null;
+  updatedAt?: number;
+  createdAt?: number;
+  /** `true` if the domain is verified for use with the project. If `false` it will not be used as an alias on this project until the challenge in `verification` is completed. */
+  verified: boolean;
+  /** A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`. */
+  verification?: {
+    type: string;
+    domain: string;
+    value: string;
+    reason: string;
+  }[];
+}
+
+export type RemoveProjectDomainParams = {
+  projectId: string;
+  domain: string;
+  teamId?: string;
+};
+
+export type RemoveEnvVarParams = {
+  projectId: string;
+  envKeyOrId: string;
+  teamId?: string;
+};
+
+export type RemoveEnvVarResponse = CreateEnvVarsResponse & {};
+
+export type ListProjectsParams = {
+  excludeRepos?: string;
+  from?: string;
+  gitForkProtection?: string;
+  repo?: string;
+  repoId?: string;
+  repoUrl?: string;
+  search?: string;
+  teamId?: string;
+} & PaginationParameters;
+
+export type ListProjectsResponse = {
+  projects: CreateNewProjectResponse[];
+  pagination: Pagination;
 };

@@ -57,8 +57,20 @@ export const endpointMap = {
   addDomainToProject: (idOrName: string) =>
     `${BASE_URL}/v9/projects/${idOrName}/domains`,
   createNewProject: `${BASE_URL}/v9/projects`,
-  createEnvVars: (id: string) => `${BASE_URL}/v9/projects/${id}/env`,
-  deleteProject: (id: string) => `${BASE_URL}/v9/projects/${id}`,
+  createEnvVars: (projectId: string) =>
+    `${BASE_URL}/v9/projects/${projectId}/env`,
+  deleteProject: (projectId: string) => `${BASE_URL}/v9/projects/${projectId}`,
+  editEnvVar: (params: { projectId: string; envId: string }) =>
+    `${BASE_URL}/v9/projects/${params.projectId}/env/${params.envId}`,
+  findProjectById: (projectId: string) =>
+    `${BASE_URL}/v9/projects/${projectId}`,
+  getProjectDomain: (params: { projectId: string; domain: string }) =>
+    `${BASE_URL}/v9/projects/${params.projectId}/domains/${params.domain}`,
+  removeProjectDomain: (params: { projectId: string; domain: string }) =>
+    `${BASE_URL}/v9/projects/${params.projectId}/domains/${params.domain}`,
+  removeEnvVar: (params: { projectId: string; envKeyOrId: string }) =>
+    `${BASE_URL}/v9/projects/${params.projectId}/env/${params.envKeyOrId}`,
+  listProjects: `${BASE_URL}/v9/projects`,
 };
 
 export const nullIfUndefined = (val: any) => {

@@ -19,6 +19,12 @@ export {
   createNewProject,
   createEnvVars,
   deleteProject,
+  editEnvVar,
+  findProjectById,
+  getProjectDomain,
+  removeProjectDomain,
+  removeEnvVar,
+  listProjects,
 } from "./projects";
 export {
   listTeams,
