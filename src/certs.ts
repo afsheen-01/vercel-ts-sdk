@@ -1,5 +1,5 @@
 import { omit } from "lodash";
-import { endpointMap } from "./common";
+import { endpointMap } from "./utils/common";
 import {
   Cert,
   GetCertParams,

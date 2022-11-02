@@ -1,5 +1,5 @@
 const { beforeAll, test, expect } = require("@jest/globals");
-import { endpointMap } from "../src/common";
+import { endpointMap } from "../src/utils/common";
 import {
   createTeam,
   deleteTeam,

@@ -4,7 +4,7 @@ import {
   deleteToken,
   getTokenMetadata,
 } from "../src/authorization";
-import { endpointMap } from "../src/common";
+import { endpointMap } from "../src/utils/common";
 import { setVercelToken, getUserTokens } from "../src/index";
 
 // cant use beforeAll because we explicitly set a wrong token in the first test

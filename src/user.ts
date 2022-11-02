@@ -1,4 +1,4 @@
-import { endpointMap } from "./common";
+import { endpointMap } from "./utils/common";
 import { omit } from "lodash";
 import { del, get } from "./utils/fetch";
 import {

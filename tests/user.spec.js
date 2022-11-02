@@ -1,6 +1,6 @@
 import { beforeAll, expect, test } from "@jest/globals";
 import { setVercelToken } from "../src";
-import { endpointMap } from "../src/common";
+import { endpointMap } from "../src/utils/common";
 import { deleteUser, getUser, getUserEvents } from "../src/user";
 
 beforeAll(() => {
