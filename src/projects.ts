@@ -10,13 +10,25 @@ import {
   EditEnvVarResponse,
   FindProjectByIdParams,
   FindProjectByIdResponse,
+  GetEnvVarResponse,
+  GetEnvVarValueParams,
   GetProjectDomainParams,
   GetProjectDomainResponse,
+  ListEnvVarsParams,
+  ListEnvVarsResponse,
+  ListProjectDomainsParams,
+  ListProjectDomainsResponse,
   ListProjectsParams,
   ListProjectsResponse,
   RemoveEnvVarParams,
   RemoveEnvVarResponse,
   RemoveProjectDomainParams,
+  UpdateProjectDomainParams,
+  UpdateProjectDomainResponse,
+  UpdateProjectParams,
+  UpdateProjectResponse,
+  VerifyProjectDomainParams,
+  VerifyProjectDomainResponse,
 } from "./types/projects";
 import { endpointMap } from "./utils/common";
 import { del, get, patch, post } from "./utils/fetch";
@@ -106,4 +118,60 @@ export const listProjects = (params?: ListProjectsParams) => {
   return get<ListProjectsResponse>(endpointMap.listProjects, {
     ...(params && { query: params }),
   });
+};
+
+export const listProjectDomains = (params: ListProjectDomainsParams) => {
+  const { projectId } = params;
+  return get<ListProjectDomainsResponse>(
+    endpointMap.listProjectDomains(projectId)
+  );
+};
+
+export const getEnvVarValue = (params: GetEnvVarValueParams) => {
+  const { teamId, projectId, envId } = params;
+  return get<GetEnvVarResponse>(
+    endpointMap.getEnvVarValue({ projectId, envId }),
+    {
+      ...(teamId && { query: { teamId } }),
+    }
+  );
+};
+
+export const listEnvVars = (params: ListEnvVarsParams) => {
+  const { projectId, ...rest } = params;
+  return get<ListEnvVarsResponse>(endpointMap.listtEnvVars(projectId), {
+    ...(Object.keys(rest).length && { query: rest }),
+  });
+};
+
+export const updateProjectDomain = (params: UpdateProjectDomainParams) => {
+  const { projectId, domain, teamId, ...rest } = params;
+  return patch<UpdateProjectDomainResponse>(
+    endpointMap.updateProjectDomain({
+      projectId,
+      domain,
+    }),
+    {
+      ...(teamId && { query: { teamId } }),
+      ...(Object.keys(rest).length && { data: rest }),
+    }
+  );
+};
+
+export const updateProject = (params: UpdateProjectParams) => {
+  const { projectId, teamId, ...rest } = params;
+  return patch<UpdateProjectResponse>(endpointMap.updateProject(projectId), {
+    ...(teamId && { query: { teamId } }),
+    ...(Object.keys(rest).length && { data: rest }),
+  });
+};
+
+export const verifyProjectDomain = (params: VerifyProjectDomainParams) => {
+  const { teamId, projectId, domain } = params;
+  return post<VerifyProjectDomainResponse>(
+    endpointMap.verifyProjectDomain({ projectId, domain }),
+    {
+      ...(teamId && { query: { teamId } }),
+    }
+  );
 };

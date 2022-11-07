@@ -71,6 +71,17 @@ export const endpointMap = {
   removeEnvVar: (params: { projectId: string; envKeyOrId: string }) =>
     `${BASE_URL}/v9/projects/${params.projectId}/env/${params.envKeyOrId}`,
   listProjects: `${BASE_URL}/v9/projects`,
+  listProjectDomains: (projectId: string) =>
+    `${BASE_URL}/v9/projects/${projectId}/domains`,
+  getEnvVarValue: (params: { projectId: string; envId: string }) =>
+    `${BASE_URL}/v1/projects/${params.projectId}/env/${params.envId}`,
+  listtEnvVars: (projectId: string) =>
+    `${BASE_URL}/v9/projects/${projectId}/env`,
+  updateProjectDomain: (params: { projectId: string; domain: string }) =>
+    `${BASE_URL}/v9/projects/${params.projectId}/domains/${params.domain}`,
+  updateProject: (projectId: string) => `${BASE_URL}/v9/projects/${projectId}`,
+  verifyProjectDomain: (params: { projectId: string; domain: string }) =>
+    `${BASE_URL}/v9/projects/${params.projectId}/domains/${params.domain}/verify`,
 };
 
 export const nullIfUndefined = (val: any) => {

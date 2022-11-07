@@ -25,6 +25,12 @@ export {
   removeProjectDomain,
   removeEnvVar,
   listProjects,
+  listProjectDomains,
+  getEnvVarValue,
+  listEnvVars,
+  updateProjectDomain,
+  updateProject,
+  verifyProjectDomain,
 } from "./projects";
 export {
   listTeams,
