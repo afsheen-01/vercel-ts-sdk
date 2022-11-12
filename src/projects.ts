@@ -99,7 +99,7 @@ export const getProjectDomain = (params: GetProjectDomainParams) => {
 
 export const removeProjectDomain = (params: RemoveProjectDomainParams) => {
   const { projectId, domain, teamId } = params;
-  return del<{}>(endpointMap.getProjectDomain({ projectId, domain }), {
+  return del<{}>(endpointMap.removeProjectDomain({ projectId, domain }), {
     ...(teamId && { query: { teamId } }),
   });
 };
@@ -121,9 +121,12 @@ export const listProjects = (params?: ListProjectsParams) => {
 };
 
 export const listProjectDomains = (params: ListProjectDomainsParams) => {
-  const { projectId } = params;
+  const { projectId, ...rest } = params;
   return get<ListProjectDomainsResponse>(
-    endpointMap.listProjectDomains(projectId)
+    endpointMap.listProjectDomains(projectId),
+    {
+      ...(Object.keys(rest).length && { query: rest }),
+    }
   );
 };
 
@@ -139,7 +142,7 @@ export const getEnvVarValue = (params: GetEnvVarValueParams) => {
 
 export const listEnvVars = (params: ListEnvVarsParams) => {
   const { projectId, ...rest } = params;
-  return get<ListEnvVarsResponse>(endpointMap.listtEnvVars(projectId), {
+  return get<ListEnvVarsResponse>(endpointMap.listEnvVars(projectId), {
     ...(Object.keys(rest).length && { query: rest }),
   });
 };

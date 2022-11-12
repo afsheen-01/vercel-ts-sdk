@@ -75,7 +75,7 @@ export const endpointMap = {
     `${BASE_URL}/v9/projects/${projectId}/domains`,
   getEnvVarValue: (params: { projectId: string; envId: string }) =>
     `${BASE_URL}/v1/projects/${params.projectId}/env/${params.envId}`,
-  listtEnvVars: (projectId: string) =>
+  listEnvVars: (projectId: string) =>
     `${BASE_URL}/v9/projects/${projectId}/env`,
   updateProjectDomain: (params: { projectId: string; domain: string }) =>
     `${BASE_URL}/v9/projects/${params.projectId}/domains/${params.domain}`,
