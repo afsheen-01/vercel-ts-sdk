@@ -1,40 +1,42 @@
 #! /usr/bin/env node
 
-/**
- * usages:
- * ./scripts.sh --help: show help
- * ./scripts.sh --api <file_name>  => create resources starter
- *  eg. ./scripts.sh --api projects
- *  will create src/projects.ts and src/types/projects.ts
- *
- */
-
 const { argv } = process;
 const fs = require("fs");
+const generateTests = require("./tests/generate");
 
 const main = async () => {
   const [command, ...args] = argv.slice(2);
   switch (command) {
     case "--api":
       let fileName = args[0];
-      if (!fileName) {
-        console.log(
-          "Need a filename to create api resource starterpack. Try --help."
-        );
+      const { error: apiError } = await createResourceFiles(fileName);
+      if (apiError) {
+        console.log(apiError);
         break;
       }
-      await createResourceFiles(fileName);
-      console.log(
-        `Created resource files at ./src/${fileName}.ts, ./src/types/${fileName}.ts and ./tests/${fileName}.spec.ts.`
-      );
+      console.log("Generated the resources.");
       break;
     case "--generate-index":
-      try {
-        await generateIndexFile();
-        console.log("Index generated.");
-      } catch (e) {
-        console.log(e);
+      const { error: indexError } = await generateIndexFile();
+      if (indexError) {
+        console.log(indexError);
+        break;
       }
+      console.log("Index generated.");
+      break;
+    case "--generate-test":
+      const [_, output] = args;
+      const { data: testsData, error: testsError } = await generateTests(args);
+      if (testsError) {
+        console.log(testsError);
+        break;
+      }
+      if (output) {
+        fs.writeFileSync(`./tests/${output}`, testsData, "utf-8");
+        console.log(`Tests generated. Check ./tests/${output}`);
+        break;
+      }
+      if (testsData) console.log(testsData);
       break;
     case "--help":
       showHelp();
@@ -45,24 +47,36 @@ const main = async () => {
 };
 
 const createResourceFiles = async (fileName) => {
-  fs.writeFileSync(`./src/${fileName}.ts`, "");
-  fs.writeFileSync(`./src/types/${fileName}.ts`, "");
-  fs.writeFileSync(`./tests/${fileName}.spec.ts`, "");
-  return true;
+  try {
+    if (!fileName)
+      throw new Error(
+        "Need a filename to create api resource starterpack. Try --help."
+      );
+    fs.writeFileSync(`./src/${fileName}.ts`, "");
+    fs.writeFileSync(`./src/types/${fileName}.ts`, "");
+    fs.writeFileSync(`./tests/defs/${fileName}.yml`, "");
+    return {};
+  } catch (e) {
+    return { error: e.toString() };
+  }
 };
 
 const generateIndexFile = async () => {
-  const exclude = "index.ts";
-  const filesInSrcDir = fs.readdirSync("./src");
-  const resourceFiles = filesInSrcDir.filter(
-    (file) => file.includes(".ts") && file !== exclude
-  );
-  const contents = resourceFiles
-    .map(generateExportString)
-    .filter((str) => !!str.length);
-  const finalContents = appendToIndex().concat(contents);
-  fs.writeFileSync("./src/index.ts", finalContents.join("\n"));
-  return true;
+  try {
+    const exclude = "index.ts";
+    const filesInSrcDir = fs.readdirSync("./src");
+    const resourceFiles = filesInSrcDir.filter(
+      (file) => file.includes(".ts") && file !== exclude
+    );
+    const contents = resourceFiles
+      .map(generateExportString)
+      .filter((str) => !!str.length);
+    const finalContents = appendToIndex().concat(contents);
+    fs.writeFileSync("./src/index.ts", finalContents.join("\n"));
+    return {};
+  } catch (e) {
+    return { error: e.toString() };
+  }
 };
 
 const generateExportString = (fileName) => {
@@ -91,8 +105,10 @@ const showHelp = () => {
   const helpText =
     "Usage:\n \
 ./scripts.sh --help -> show this help.\n \
-./scripts.sh --api fileName -> create ./src/fileName.ts and ./src/types/fileName.ts to help you get started with writing a resource.\n \
-./scripts.sh --generate-index -> generate an index.ts file in ./src based on the exports in resource files.";
+./scripts.sh --api fileName -> create ./src/fileName.ts, ./src/types/fileName.ts and ./tests/defs/fileName.yml to help you get started with writing a resource.\n \
+./scripts.sh --generate-index -> generate an index.ts file in ./src based on the exports in resource files.\n \
+./scripts.sh --generate-test input.yml [output.spec.ts] -> generate test file for one single file defined in ./tests/defs/input.yml. If 'output' is provided, file be written to ./tests/output.spec.ts. Otherwise, output is streamed to stdout.\n \
+";
   console.log(helpText);
 };
 

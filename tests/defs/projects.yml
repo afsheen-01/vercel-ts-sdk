@@ -1,0 +1,189 @@
+tests:
+  - name: add domain to project
+    call: addDomainToProject
+    with: '{ projectId: "project1", teamId: "team1", name: "google.com" }'
+    expect:
+      - var: url
+        value: endpointMap.addDomainToProject("project1")
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: post
+  - name: create a new project
+    call: createNewProject
+    with: '{ teamId: "team1", name: "proj1", buildCommand: "yarn build" }'
+    expect:
+      - var: url
+        value: endpointMap.createNewProject
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: post
+      - var: body
+        value: '{ name: "proj1" , buildCommand: "yarn build" }'
+  - name: create env vars
+    call: createEnvVars
+    with: '{projectId:"project1",teamId:"team1"}'
+    expect:
+      - var: url
+        value: endpointMap.createEnvVars("project1")
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: post
+  - name: delete a project
+    call: deleteProject
+    with: '{projectId:"project1", teamId: "team1"}'
+    expect:
+      - var: url
+        value: endpointMap.deleteProject("project1")
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: delete
+  - name: edit env var
+    call: editEnvVar
+    with: '{projectId:"project1", teamId: "team1", envId: "env1"}'
+    expect:
+      - var: url
+        value: 'endpointMap.editEnvVar({ projectId: "project1", envId: "env1" })'
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: patch
+  - name: find project by ID
+    call: findProjectById
+    with: '{projectId:"project1", teamId: "team1"}'
+    expect:
+      - var: url
+        value: 'endpointMap.findProjectById("project1")'
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: get
+  - name: get project domain
+    call: getProjectDomain
+    with: '{projectId:"project1", domain: "domain1", teamId: "team1"}'
+    expect:
+      - var: url
+        value: 'endpointMap.getProjectDomain({projectId:"project1",domain:"domain1"})'
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: get
+  - name: remove project domain
+    call: removeProjectDomain
+    with: '{projectId:"project1", domain: "domain1", teamId: "team1"}'
+    expect:
+      - var: url
+        value: 'endpointMap.removeProjectDomain({projectId:"project1",domain:"domain1"})'
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: delete
+  - name: remove env var
+    call: removeEnvVar
+    with: '{projectId:"project1", envKeyOrId: "env1", teamId: "team1"}'
+    expect:
+      - var: url
+        value: 'endpointMap.removeEnvVar({projectId:"project1",envKeyOrId:"env1"})'
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: delete
+  - name: list all projects
+    call: listProjects
+    with: '{teamId: "team1"}'
+    expect:
+      - var: url
+        value: endpointMap.listProjects
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: get
+  - name: list all projects without params
+    call: listProjects
+    with:
+    expect:
+      - var: url
+        value: endpointMap.listProjects
+      - var: method
+        value: get
+  - name: list project domains
+    call: listProjectDomains
+    with: '{projectId: "project1", order: "ASC"}'
+    expect:
+      - var: url
+        value: endpointMap.listProjectDomains("project1")
+        rule: toContain
+      - var: query
+        value: '{ order: "ASC" }'
+      - var: method
+        value: get
+  - name: get env var value
+    call: getEnvVarValue
+    with: '{projectId: "project1", envId: "env1", teamId: "team1"}'
+    expect:
+      - var: url
+        value: 'endpointMap.getEnvVarValue({projectId: "project1", envId: "env1"})'
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: get
+  - name: list env vars
+    call: listEnvVars
+    with: '{projectId: "project1", teamId: "team1", decrypt:true}'
+    expect:
+      - var: url
+        value: 'endpointMap.listEnvVars("project1")'
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1", decrypt: "true" }'
+      - var: method
+        value: get
+  - name: update project domain
+    call: updateProjectDomain
+    with: '{projectId: "project1", teamId: "team1", domain:"google.com"}'
+    expect:
+      - var: url
+        value: 'endpointMap.updateProjectDomain({projectId: "project1", domain: "google.com"})'
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: patch
+  - name: update project
+    call: updateProject
+    with: '{projectId: "project1", teamId: "team1", buildCommand:"yarn build"}'
+    expect:
+      - var: url
+        value: endpointMap.updateProject("project1")
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: patch
+      - var: body
+        value: '{ buildCommand: "yarn build"}'
+  - name: verify project domain
+    call: verifyProjectDomain
+    with: '{projectId: "project1", teamId: "team1", domain:"domain1"}'
+    expect:
+      - var: url
+        value: 'endpointMap.verifyProjectDomain({projectId:"project1",domain:"domain1"})'
+        rule: toContain
+      - var: query
+        value: '{ teamId: "team1" }'
+      - var: method
+        value: post
