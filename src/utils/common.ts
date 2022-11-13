@@ -82,6 +82,10 @@ export const endpointMap = {
   updateProject: (projectId: string) => `${BASE_URL}/v9/projects/${projectId}`,
   verifyProjectDomain: (params: { projectId: string; domain: string }) =>
     `${BASE_URL}/v9/projects/${params.projectId}/domains/${params.domain}/verify`,
+  createNewCheck: (deploymentId: string) =>
+    `${BASE_URL}/v1/deployments/${deploymentId}/checks`,
+  getCheck: (params: { deploymentId: string; checkId: string }) =>
+    `${BASE_URL}/v1/deployments/${params.deploymentId}/checks/${params.checkId}`,
 };
 
 export const nullIfUndefined = (val: any) => {

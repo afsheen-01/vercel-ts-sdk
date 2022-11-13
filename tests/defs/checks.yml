@@ -1,0 +1,23 @@
+tests:
+  - name: create new check
+    call: createNewCheck
+    with: '{deploymentId: "dep1", teamId:"team1", name:"check-name"}'
+    expect:
+      - var: method
+        value: post
+      - var: url
+        value: endpointMap.createNewCheck("dep1")
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: get check details
+    call: getCheck
+    with: '{deploymentId: "dep1", teamId:"team1", checkId:"check1"}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.getCheck({deploymentId:"dep1",checkId:"check1"})
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
