@@ -111,6 +111,16 @@ test("get access request status", async () => {
     endpointMap.getAccessRequestStatus({ teamId: "team1", userId: "user1" })
   );
 });
+test("get access request status without userId", async () => {
+  const { data, error } = await getAccessRequestStatus({
+    teamId: "team1",
+  });
+  if (error) console.log(error);
+  expect(error).toBe(null);
+  expect(data?.url).toBe(
+    endpointMap.getAccessRequestStatus({ teamId: "team1" })
+  );
+});
 
 test("invite user", async () => {
   const { data, error } = await inviteUser({

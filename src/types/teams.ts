@@ -358,7 +358,7 @@ export type GetTeamParams = { teamId: string };
 
 export type GetAccessRequestStatusParams = {
   teamId: string;
-  userId: string;
+  userId?: string;
 };
 
 export type InviteUserParams = {
