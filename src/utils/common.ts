@@ -38,7 +38,7 @@ export const endpointMap = {
     `${BASE_URL}/v1/teams/${params.teamId}/invites/${params.inviteId}`,
   getTeam: (teamId: string) => `${BASE_URL}/v2/teams/${teamId}`,
   getAccessRequestStatus: (params: { teamId: string; userId?: string }) =>
-    `${BASE_URL}/v1/teams/${params.teamId}/request/${params?.userId}`,
+    `${BASE_URL}/v1/teams/${params.teamId}/request/${params?.userId || ""}`,
   inviteUser: (teamId: string) => `${BASE_URL}/v1/teams/${teamId}/members`,
   joinTeam: (teamId: string) =>
     `${BASE_URL}/v1/teams/${teamId}/members/teams/join`,
@@ -85,6 +85,12 @@ export const endpointMap = {
   createNewCheck: (deploymentId: string) =>
     `${BASE_URL}/v1/deployments/${deploymentId}/checks`,
   getCheck: (params: { deploymentId: string; checkId: string }) =>
+    `${BASE_URL}/v1/deployments/${params.deploymentId}/checks/${params.checkId}`,
+  reRequestCheck: (params: { deploymentId: string; checkId: string }) =>
+    `${BASE_URL}/v1/deployments/${params.deploymentId}/checks/${params.checkId}/rerequest`,
+  listChecks: (deploymentId: string) =>
+    `${BASE_URL}/v1/deployments/${deploymentId}/checks`,
+  updateCheck: (params: { deploymentId: string; checkId: string }) =>
     `${BASE_URL}/v1/deployments/${params.deploymentId}/checks/${params.checkId}`,
 };
 
