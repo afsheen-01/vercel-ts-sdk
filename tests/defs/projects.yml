@@ -50,8 +50,8 @@ tests:
     with: '{projectId:"project1", teamId: "team1", envId: "env1"}'
     expect:
       - var: url
-        value: 'endpointMap.editEnvVar({ projectId: "project1", envId: "env1" })'
         rule: toContain
+        value: endpointMap.editEnvVar({projectId:"project1",envId:"env1"})
       - var: query
         value: '{ teamId: "team1" }'
       - var: method
@@ -72,7 +72,7 @@ tests:
     with: '{projectId:"project1", domain: "domain1", teamId: "team1"}'
     expect:
       - var: url
-        value: 'endpointMap.getProjectDomain({projectId:"project1",domain:"domain1"})'
+        value: endpointMap.getProjectDomain({projectId:"project1",domain:"domain1"})
         rule: toContain
       - var: query
         value: '{ teamId: "team1" }'
@@ -83,7 +83,7 @@ tests:
     with: '{projectId:"project1", domain: "domain1", teamId: "team1"}'
     expect:
       - var: url
-        value: 'endpointMap.removeProjectDomain({projectId:"project1",domain:"domain1"})'
+        value: endpointMap.removeProjectDomain({projectId:"project1",domain:"domain1"})
         rule: toContain
       - var: query
         value: '{ teamId: "team1" }'
@@ -94,7 +94,7 @@ tests:
     with: '{projectId:"project1", envKeyOrId: "env1", teamId: "team1"}'
     expect:
       - var: url
-        value: 'endpointMap.removeEnvVar({projectId:"project1",envKeyOrId:"env1"})'
+        value: endpointMap.removeEnvVar({projectId:"project1",envKeyOrId:"env1"})
         rule: toContain
       - var: query
         value: '{ teamId: "team1" }'
@@ -135,7 +135,7 @@ tests:
     with: '{projectId: "project1", envId: "env1", teamId: "team1"}'
     expect:
       - var: url
-        value: 'endpointMap.getEnvVarValue({projectId: "project1", envId: "env1"})'
+        value: endpointMap.getEnvVarValue({projectId:"project1", envId:"env1"})
         rule: toContain
       - var: query
         value: '{ teamId: "team1" }'
@@ -146,7 +146,7 @@ tests:
     with: '{projectId: "project1", teamId: "team1", decrypt:true}'
     expect:
       - var: url
-        value: 'endpointMap.listEnvVars("project1")'
+        value: endpointMap.listEnvVars("project1")
         rule: toContain
       - var: query
         value: '{ teamId: "team1", decrypt: "true" }'
@@ -157,7 +157,7 @@ tests:
     with: '{projectId: "project1", teamId: "team1", domain:"google.com"}'
     expect:
       - var: url
-        value: 'endpointMap.updateProjectDomain({projectId: "project1", domain: "google.com"})'
+        value: endpointMap.updateProjectDomain({projectId:"project1", domain:"google.com"})
         rule: toContain
       - var: query
         value: '{ teamId: "team1" }'
@@ -181,7 +181,7 @@ tests:
     with: '{projectId: "project1", teamId: "team1", domain:"domain1"}'
     expect:
       - var: url
-        value: 'endpointMap.verifyProjectDomain({projectId:"project1",domain:"domain1"})'
+        value: endpointMap.verifyProjectDomain({projectId:"project1",domain:"domain1"})
         rule: toContain
       - var: query
         value: '{ teamId: "team1" }'
