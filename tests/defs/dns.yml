@@ -1,0 +1,54 @@
+tests:
+  - name: create dns record
+    call: createDNSRecord
+    with: '{ domain:"google.com", type:"sometype" }'
+    expect:
+      - var: method
+        value: post
+      - var: url
+        value: endpointMap.createDNSRecord("google.com")
+      - var: body
+        value: '{ type:"sometype" }'
+  - name: create dns record (with teamId param)
+    call: createDNSRecord
+    with: '{ domain:"google.com", type:"sometype", teamId:"team1" }'
+    expect:
+      - var: method
+        value: post
+      - var: url
+        value: endpointMap.createDNSRecord("google.com")
+        rule: toContain
+      - var: query
+        value: '{ teamId:"team1" }'
+      - var: body
+        value: '{ type:"sometype" }'
+  - name: delete dns record
+    call: deleteDNSRecord
+    with: '{ domain:"google.com", recordId:"rec1", teamId:"team1" }'
+    expect:
+      - var: method
+        value: delete
+      - var: url
+        value: endpointMap.deleteDNSRecord({domain:"google.com",recordId:"rec1"})
+        rule: toContain
+      - var: query
+        value: '{ teamId:"team1" }'
+  - name: list dns records
+    call: listDNSRecords
+    with: '{ domain:"google.com" }'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.listDNSRecords("google.com")
+  - name: list dns records (with query params)
+    call: listDNSRecords
+    with: '{ domain:"google.com",teamId:"team1",next:100 }'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.listDNSRecords("google.com")
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1",until:"100"}'
