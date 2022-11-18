@@ -1,0 +1,69 @@
+tests:
+  - name: create new check
+    call: createNewCheck
+    with: '{deploymentId: "dep1", teamId:"team1", name:"check-name"}'
+    expect:
+      - var: method
+        value: post
+      - var: url
+        value: endpointMap.createNewCheck("dep1")
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: get check details
+    call: getCheck
+    with: '{deploymentId: "dep1", teamId:"team1", checkId:"check1"}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.getCheck({deploymentId:"dep1",checkId:"check1"})
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: rerequest check
+    call: reRequestCheck
+    with: '{deploymentId: "dep1", teamId:"team1", checkId:"check1"}'
+    expect:
+      - var: method
+        value: post
+      - var: url
+        value: endpointMap.reRequestCheck({deploymentId:"dep1",checkId:"check1"})
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: list all checks
+    call: listChecks
+    with: '{deploymentId: "dep1", teamId:"team1"}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.listChecks("dep1")
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: update a check
+    call: updateCheck
+    with: '{deploymentId: "dep1", checkId: "check1", teamId:"team1"}'
+    expect:
+      - var: method
+        value: patch
+      - var: url
+        value: endpointMap.updateCheck({deploymentId:"dep1",checkId:"check1"})
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: update a check with body params
+    call: updateCheck
+    with: '{deploymentId: "dep1", checkId: "check1", teamId:"team1",conclusion:"succeeded"}'
+    expect:
+      - var: method
+        value: patch
+      - var: url
+        value: endpointMap.updateCheck({deploymentId:"dep1",checkId:"check1"})
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+      - var: body
+        value: '{conclusion:"succeeded"}'
