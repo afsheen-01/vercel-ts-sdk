@@ -15,6 +15,24 @@ export {
 export { uploadCert, getCert, removeCert, issueNewCert } from "./certs";
 export { listDeployments } from "./deployments";
 export {
+  addDomainToProject,
+  createNewProject,
+  createEnvVars,
+  deleteProject,
+  editEnvVar,
+  findProjectById,
+  getProjectDomain,
+  removeProjectDomain,
+  removeEnvVar,
+  listProjects,
+  listProjectDomains,
+  getEnvVarValue,
+  listEnvVars,
+  updateProjectDomain,
+  updateProject,
+  verifyProjectDomain,
+} from "./projects";
+export {
   listTeams,
   createTeam,
   deleteTeam,
