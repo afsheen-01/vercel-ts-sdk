@@ -37,8 +37,8 @@ export const endpointMap = {
   deleteTeamInviteCode: (params: { teamId: string; inviteId: string }) =>
     `${BASE_URL}/v1/teams/${params.teamId}/invites/${params.inviteId}`,
   getTeam: (teamId: string) => `${BASE_URL}/v2/teams/${teamId}`,
-  getAccessRequestStatus: (params: { teamId: string; userId: string }) =>
-    `${BASE_URL}/v1/teams/${params.teamId}/request/${params.userId}`,
+  getAccessRequestStatus: (params: { teamId: string; userId?: string }) =>
+    `${BASE_URL}/v1/teams/${params.teamId}/request/${params?.userId}`,
   inviteUser: (teamId: string) => `${BASE_URL}/v1/teams/${teamId}/members`,
   joinTeam: (teamId: string) =>
     `${BASE_URL}/v1/teams/${teamId}/members/teams/join`,
