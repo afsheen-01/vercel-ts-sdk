@@ -2,7 +2,7 @@ import { Response } from "node-fetch";
 import { CustomError } from "../src/utils/fetch";
 
 export default (url: string, options: any) => {
-  if (!options.headers.Authorization) {
+  if (!options.headers?.Authorization) {
     const errResponse = new CustomError({
       message: "No authorization token in headers",
     });
