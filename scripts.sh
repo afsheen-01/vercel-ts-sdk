@@ -102,14 +102,23 @@ const appendToIndex = () => {
 };
 
 const showHelp = () => {
-  const helpText =
-    "Usage:\n \
-./scripts.sh --help -> show this help.\n \
-./scripts.sh --api fileName -> create ./src/fileName.ts, ./src/types/fileName.ts and ./tests/defs/fileName.yml to help you get started with writing a resource.\n \
-./scripts.sh --generate-index -> generate an index.ts file in ./src based on the exports in resource files.\n \
-./scripts.sh --generate-test input.yml [output.spec.ts] -> generate test file for one single file defined in ./tests/defs/input.yml. If 'output' is provided, file be written to ./tests/output.spec.ts. Otherwise, output is streamed to stdout.\n \
-";
-  console.log(helpText);
+  let helpText = [
+    ["./scripts.sh --help", "Show this help."],
+    [
+      "./scripts.sh --api fileName",
+      "Create ./src/fileName.ts, ./src/types/fileName.ts and ./tests/defs/fileName.yml to help you get started with writing a resource.",
+    ],
+    [
+      "./scripts.sh --generate-index",
+      "Generate an index.ts file in ./src based on the exports in resource files.",
+    ],
+    [
+      "./scripts.sh --generate-test input.yml [output.spec.ts]",
+      "Generate test file for one single file defined in ./tests/defs/input.yml. If 'output' is provided, file will be written to ./tests/output. Otherwise, output is streamed to stdout.",
+    ],
+  ];
+  helpText = helpText.map(([c, d]) => `${c}\n\t${d}`).join("\n\n");
+  console.log(`Usage:\n\n${helpText}`);
 };
 
 main();
