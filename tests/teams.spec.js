@@ -1,5 +1,5 @@
 const { beforeAll, test, expect } = require("@jest/globals");
-import { endpointMap } from "../src/utils/common";
+import { endpointMap, BASE_URL } from "../src/utils/common";
 import {
   createTeam,
   deleteTeam,
@@ -26,7 +26,7 @@ test("list teams (with 'since' and 'next')", async () => {
   });
   if (error) console.log(error);
   expect(error).toBe(null);
-  expect(data?.url).toContain(endpointMap.listTeams);
+  expect(data?.url).toContain(BASE_URL + endpointMap.listTeams);
   expect(data?.query).toEqual({
     since: "20",
     until: "10",
@@ -53,7 +53,7 @@ test("delete team (without reason)", async () => {
   if (error) console.log(error);
   expect(error).toBe(null);
   expect(data?.body).toBeFalsy();
-  expect(data?.url).toBe(endpointMap.deleteTeam("team1"));
+  expect(data?.url).toBe(BASE_URL + endpointMap.deleteTeam("team1"));
 });
 
 test("delete team (with reason)", async () => {
@@ -78,7 +78,7 @@ test("delete team (with reason)", async () => {
       ],
     })
   );
-  expect(data?.url).toBe(endpointMap.deleteTeam("team1"));
+  expect(data?.url).toBe(BASE_URL + endpointMap.deleteTeam("team1"));
 });
 
 test("delete team invite code", async () => {
@@ -89,7 +89,8 @@ test("delete team invite code", async () => {
   if (error) console.log(error);
   expect(error).toBe(null);
   expect(data?.url).toBe(
-    endpointMap.deleteTeamInviteCode({ teamId: "team1", inviteId: "invite1" })
+    BASE_URL +
+      endpointMap.deleteTeamInviteCode({ teamId: "team1", inviteId: "invite1" })
   );
 });
 
@@ -97,7 +98,7 @@ test("get team", async () => {
   const { data, error } = await getTeam({ teamId: "team1" });
   if (error) console.log(error);
   expect(error).toBe(null);
-  expect(data?.url).toBe(endpointMap.getTeam("team1"));
+  expect(data?.url).toBe(BASE_URL + endpointMap.getTeam("team1"));
 });
 
 test("get access request status", async () => {
@@ -108,7 +109,8 @@ test("get access request status", async () => {
   if (error) console.log(error);
   expect(error).toBe(null);
   expect(data?.url).toBe(
-    endpointMap.getAccessRequestStatus({ teamId: "team1", userId: "user1" })
+    BASE_URL +
+      endpointMap.getAccessRequestStatus({ teamId: "team1", userId: "user1" })
   );
 });
 test("get access request status without userId", async () => {
@@ -118,7 +120,7 @@ test("get access request status without userId", async () => {
   if (error) console.log(error);
   expect(error).toBe(null);
   expect(data?.url).toBe(
-    endpointMap.getAccessRequestStatus({ teamId: "team1" })
+    BASE_URL + endpointMap.getAccessRequestStatus({ teamId: "team1" })
   );
 });
 
@@ -131,7 +133,7 @@ test("invite user", async () => {
   });
   if (error) console.log(error);
   expect(error).toBe(null);
-  expect(data?.url).toBe(endpointMap.inviteUser("team1"));
+  expect(data?.url).toBe(BASE_URL + endpointMap.inviteUser("team1"));
   expect(data?.body).toEqual(
     JSON.stringify({
       email: "user@email",
@@ -148,7 +150,7 @@ test("join team", async () => {
   });
   if (error) console.log(error);
   expect(error).toBe(null);
-  expect(data?.url).toBe(endpointMap.joinTeam("team1"));
+  expect(data?.url).toBe(BASE_URL + endpointMap.joinTeam("team1"));
   expect(data?.body).toEqual(
     JSON.stringify({
       teamId: "team1",
@@ -166,7 +168,7 @@ test("list team members", async () => {
   });
   if (error) console.log(error);
   expect(error).toBe(null);
-  expect(data?.url).toContain(endpointMap.listTeamMembers("team1"));
+  expect(data?.url).toContain(BASE_URL + endpointMap.listTeamMembers("team1"));
   expect(data?.query).toEqual({
     role: "MEMBER",
     search: "search-string",
@@ -182,10 +184,11 @@ test("remove team member", async () => {
   if (error) console.log(error);
   expect(error).toBe(null);
   expect(data?.url).toContain(
-    endpointMap.removeTeamMember({
-      teamId: "team1",
-      userId: "user1",
-    })
+    BASE_URL +
+      endpointMap.removeTeamMember({
+        teamId: "team1",
+        userId: "user1",
+      })
   );
 });
 
@@ -196,7 +199,9 @@ test("request access to team", async () => {
   });
   if (error) console.log(error);
   expect(error).toBe(null);
-  expect(data?.url).toContain(endpointMap.requestAccessToTeam("team1"));
+  expect(data?.url).toContain(
+    BASE_URL + endpointMap.requestAccessToTeam("team1")
+  );
   expect(data?.body).toEqual(
     JSON.stringify({
       joinedFrom: "origin",
@@ -217,7 +222,7 @@ test("update team", async () => {
   });
   if (error) console.log(error);
   expect(error).toBe(null);
-  expect(data?.url).toContain(endpointMap.updateTeam("team1"));
+  expect(data?.url).toContain(BASE_URL + endpointMap.updateTeam("team1"));
   expect(data?.body).toEqual(JSON.stringify(body));
 });
 
@@ -234,10 +239,11 @@ test("update team member", async () => {
   if (error) console.log(error);
   expect(error).toBe(null);
   expect(data?.url).toContain(
-    endpointMap.updateTeamMember({
-      teamId: "team1",
-      userId: "user1",
-    })
+    BASE_URL +
+      endpointMap.updateTeamMember({
+        teamId: "team1",
+        userId: "user1",
+      })
   );
   expect(data?.body).toEqual(JSON.stringify(body));
 });

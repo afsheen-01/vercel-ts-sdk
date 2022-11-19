@@ -1,5 +1,5 @@
 import {beforeAll, test, expect} from '@jest/globals'
-import { endpointMap } from '../src/utils/common'
+import { endpointMap, BASE_URL } from '../src/utils/common'
 import {createDNSRecord, deleteDNSRecord, listDNSRecords, setVercelToken} from '../src/index'
 
 beforeAll(() => setVercelToken(process.env.VERCEL_TOKEN));
@@ -9,7 +9,7 @@ test("create dns record", async () => {
 	if (error) console.log(error)
 	expect(error).toBe(null)
 	expect(data?.method).toEqual("post")
-	expect(data?.url).toEqual(endpointMap.createDNSRecord("google.com"))
+	expect(data?.url).toEqual(BASE_URL + endpointMap.createDNSRecord("google.com"))
 	expect(data?.body).toEqual(JSON.stringify({ type:"sometype" }))
 })
 
@@ -18,7 +18,7 @@ test("create dns record (with teamId param)", async () => {
 	if (error) console.log(error)
 	expect(error).toBe(null)
 	expect(data?.method).toEqual("post")
-	expect(data?.url).toContain(endpointMap.createDNSRecord("google.com"))
+	expect(data?.url).toContain(BASE_URL + endpointMap.createDNSRecord("google.com"))
 	expect(data?.query).toEqual({ teamId:"team1" })
 	expect(data?.body).toEqual(JSON.stringify({ type:"sometype" }))
 })
@@ -28,7 +28,7 @@ test("delete dns record", async () => {
 	if (error) console.log(error)
 	expect(error).toBe(null)
 	expect(data?.method).toEqual("delete")
-	expect(data?.url).toContain(endpointMap.deleteDNSRecord({domain:"google.com",recordId:"rec1"}))
+	expect(data?.url).toContain(BASE_URL + endpointMap.deleteDNSRecord({domain:"google.com",recordId:"rec1"}))
 	expect(data?.query).toEqual({ teamId:"team1" })
 })
 
@@ -37,7 +37,7 @@ test("list dns records", async () => {
 	if (error) console.log(error)
 	expect(error).toBe(null)
 	expect(data?.method).toEqual("get")
-	expect(data?.url).toEqual(endpointMap.listDNSRecords("google.com"))
+	expect(data?.url).toEqual(BASE_URL + endpointMap.listDNSRecords("google.com"))
 })
 
 test("list dns records (with query params)", async () => {
@@ -45,6 +45,6 @@ test("list dns records (with query params)", async () => {
 	if (error) console.log(error)
 	expect(error).toBe(null)
 	expect(data?.method).toEqual("get")
-	expect(data?.url).toContain(endpointMap.listDNSRecords("google.com"))
+	expect(data?.url).toContain(BASE_URL + endpointMap.listDNSRecords("google.com"))
 	expect(data?.query).toEqual({teamId:"team1",until:"100"})
 })

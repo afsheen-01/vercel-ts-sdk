@@ -29,7 +29,7 @@ const generateTestFile = async (yamlString) => {
 const testHeaders = (testFuncNames) =>
   [
     `import {beforeAll, test, expect} from '@jest/globals'`,
-    `import { endpointMap } from '../src/utils/common'`,
+    `import { endpointMap, BASE_URL } from '../src/utils/common'`,
     `import {${uniq(testFuncNames).join(
       ", "
     )}, setVercelToken} from '../src/index'`,
@@ -54,6 +54,8 @@ const generateExpect = (expect) => {
       ? `"${expect.value}"`
       : expect.var === "body"
       ? `JSON.stringify(${expect.value})`
+      : expect.var === "url"
+      ? "BASE_URL + " + `${expect.value}`
       : expect.value;
   return [`expect(data?.${expect.var}).${expect.rule || "toEqual"}(${value})`];
 };

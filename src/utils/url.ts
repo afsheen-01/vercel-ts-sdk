@@ -1,14 +1,16 @@
 import { Primitives } from "../types/fetch";
+import { BASE_URL } from "./common";
 
 export const constructQueryString = (
   url: string,
   query?: { [key: string]: Primitives }
 ): string => {
+  const urlWithBase = `${BASE_URL}${url}`;
   if (!query) {
-    return url;
+    return urlWithBase;
   }
   if (!Object.keys(query).length) {
-    return url;
+    return urlWithBase;
   }
   const kvPairs = Object.entries(query);
   const params = kvPairs
@@ -19,7 +21,7 @@ export const constructQueryString = (
         }`
     )
     .join("&");
-  return `${url}?${params}`;
+  return `${urlWithBase}?${params}`;
 };
 
 const transformNextAndPrevious = (key: string) => {
