@@ -5,7 +5,7 @@ import {
   getTokenMetadata,
 } from "../src/authorization";
 import { endpointMap } from "../src/utils/common";
-import { setVercelToken, getUserTokens } from "../src/index";
+import { setVercelToken, listUserTokens } from "../src/index";
 
 // cant use beforeAll because we explicitly set a wrong token in the first test
 beforeEach(() => {
@@ -13,28 +13,28 @@ beforeEach(() => {
 });
 
 test("get token (right token)", async () => {
-  const { data, error } = await getUserTokens();
+  const { data, error } = await listUserTokens();
   expect(error).toBe(null);
-  expect(data?.url).toBe(endpointMap.getUserTokens);
+  expect(data?.url).toBe(endpointMap.listUserTokens);
 });
 
 test("get token (with pagination param 'next')", async () => {
-  const { data, error } = await getUserTokens({
+  const { data, error } = await listUserTokens({
     next: 89897787234,
     limit: 1,
   });
   expect(error).toBe(null);
-  expect(data?.url).toContain(endpointMap.getUserTokens);
+  expect(data?.url).toContain(endpointMap.listUserTokens);
   expect(data?.query?.until).toBe("89897787234");
 });
 
 test("get token (with pagination param 'previous')", async () => {
-  const { data, error } = await getUserTokens({
+  const { data, error } = await listUserTokens({
     previous: 89897787234,
     limit: 1,
   });
   expect(error).toBe(null);
-  expect(data?.url).toContain(endpointMap.getUserTokens);
+  expect(data?.url).toContain(endpointMap.listUserTokens);
   expect(data?.query?.until).toBe("89897787234");
 });
 

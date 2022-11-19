@@ -8,8 +8,8 @@ import {
 import { PaginationParameters } from "./types/pagination";
 import { del, get, post } from "./utils/fetch";
 
-export const getUserTokens = (paginationParameters?: PaginationParameters) => {
-  return get<TokensResponse>(endpointMap.getUserTokens, {
+export const listUserTokens = (paginationParameters?: PaginationParameters) => {
+  return get<TokensResponse>(endpointMap.listUserTokens, {
     ...(paginationParameters && { query: paginationParameters }),
   });
 };
