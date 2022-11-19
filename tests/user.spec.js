@@ -1,6 +1,6 @@
 import { beforeAll, expect, test } from "@jest/globals";
 import { setVercelToken } from "../src";
-import { endpointMap } from "../src/utils/common";
+import { endpointMap, BASE_URL } from "../src/utils/common";
 import { deleteUser, getUser, getUserEvents } from "../src/user";
 
 beforeAll(() => {
@@ -11,14 +11,14 @@ test("get current user", async () => {
   const { data, error } = await getUser();
   if (error) console.log(error);
   expect(error).toBe(null);
-  expect(data?.url).toBe(endpointMap.getUser);
+  expect(data?.url).toBe(BASE_URL + endpointMap.getUser);
 });
 
 test("get user events (no query params)", async () => {
   const { error, data } = await getUserEvents();
   if (error) console.log(error);
   expect(error).toBe(null);
-  expect(data?.url).toBe(endpointMap.getUserEvents);
+  expect(data?.url).toBe(BASE_URL + endpointMap.getUserEvents);
 });
 
 test("get user events (types as array)", async () => {
@@ -34,7 +34,7 @@ test("initiate delete user workflow", async () => {
   const { error, data } = await deleteUser();
   if (error) console.log(error);
   expect(error).toBe(null);
-  expect(data?.url).toBe(endpointMap.deleteUser);
+  expect(data?.url).toBe(BASE_URL + endpointMap.deleteUser);
 });
 
 test("initiate delete user workflow, with deletion reason", async () => {

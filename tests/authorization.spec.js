@@ -4,7 +4,7 @@ import {
   deleteToken,
   getTokenMetadata,
 } from "../src/authorization";
-import { endpointMap } from "../src/utils/common";
+import { endpointMap, BASE_URL } from "../src/utils/common";
 import { setVercelToken, listUserTokens } from "../src/index";
 
 // cant use beforeAll because we explicitly set a wrong token in the first test
@@ -15,7 +15,7 @@ beforeEach(() => {
 test("get token (right token)", async () => {
   const { data, error } = await listUserTokens();
   expect(error).toBe(null);
-  expect(data?.url).toBe(endpointMap.listUserTokens);
+  expect(data?.url).toBe(BASE_URL + endpointMap.listUserTokens);
 });
 
 test("get token (with pagination param 'next')", async () => {
@@ -24,7 +24,7 @@ test("get token (with pagination param 'next')", async () => {
     limit: 1,
   });
   expect(error).toBe(null);
-  expect(data?.url).toContain(endpointMap.listUserTokens);
+  expect(data?.url).toContain(BASE_URL + endpointMap.listUserTokens);
   expect(data?.query?.until).toBe("89897787234");
 });
 
@@ -34,21 +34,21 @@ test("get token (with pagination param 'previous')", async () => {
     limit: 1,
   });
   expect(error).toBe(null);
-  expect(data?.url).toContain(endpointMap.listUserTokens);
+  expect(data?.url).toContain(BASE_URL + endpointMap.listUserTokens);
   expect(data?.query?.until).toBe("89897787234");
 });
 
 test("create a new token", async () => {
   const { data, error } = await createAuthToken({ name: "SDK Test" });
   expect(error).toBe(null);
-  expect(data?.url).toBe(endpointMap.createAuthToken);
+  expect(data?.url).toBe(BASE_URL + endpointMap.createAuthToken);
   expect(data?.body).toBe(JSON.stringify({ name: "SDK Test" }));
 });
 
 test("delete a token", async () => {
   const { data, error } = await deleteToken({ tokenId: "token1" });
   expect(error).toBe(null);
-  expect(data?.url).toBe(endpointMap.deleteToken("token1"));
+  expect(data?.url).toBe(BASE_URL + endpointMap.deleteToken("token1"));
 });
 
 test("get token metadata", async () => {
@@ -56,5 +56,5 @@ test("get token metadata", async () => {
     tokenId: "token1",
   });
   expect(error).toBe(null);
-  expect(data?.url).toBe(endpointMap.getTokenMetadata("token1"));
+  expect(data?.url).toBe(BASE_URL + endpointMap.getTokenMetadata("token1"));
 });
