@@ -32,6 +32,16 @@ export const endpointMap = {
   listTeams: `/v2/teams`,
   createTeam: `/v1/teams`,
   deleteTeam: (teamId: string) => `/v1/teams/${teamId}`,
+  listDeploymentFiles: (deploymentId: string) =>
+    `/v6/deployments/${deploymentId}/files`,
+  listDeploymentBuilds: (deploymentId: string) =>
+    `${BASE_URL}/v11/deployments/${deploymentId}/builds`,
+  getDeploymentEvents: (deploymentIdOrURL: string) =>
+    `${BASE_URL}/v2/deployments/${deploymentIdOrURL}/events`,
+  getDeployment: (deploymentIdOrURL: string) =>
+    `${BASE_URL}/v13/deployments/${deploymentIdOrURL}`,
+  getDeploymentFileContents: (deploymentId: string, fileId: string) =>
+    `${BASE_URL}/v6/deployments/${deploymentId}/files/${fileId}`,
   deleteTeamInviteCode: (params: { teamId: string; inviteId: string }) =>
     `/v1/teams/${params.teamId}/invites/${params.inviteId}`,
   getTeam: (teamId: string) => `/v2/teams/${teamId}`,
