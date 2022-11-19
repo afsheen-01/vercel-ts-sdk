@@ -92,6 +92,12 @@ export const endpointMap = {
     `${BASE_URL}/v1/deployments/${deploymentId}/checks`,
   updateCheck: (params: { deploymentId: string; checkId: string }) =>
     `${BASE_URL}/v1/deployments/${params.deploymentId}/checks/${params.checkId}`,
+  createDNSRecord: (domain: string) =>
+    `${BASE_URL}/v2/domains/${domain}/records`,
+  deleteDNSRecord: (params: { domain: string; recordId: string }) =>
+    `${BASE_URL}/v2/domains/${params.domain}/records/${params.recordId}`,
+  listDNSRecords: (domain: string) =>
+    `${BASE_URL}/v4/domains/${domain}/records`,
 };
 
 export const nullIfUndefined = (val: any) => {
