@@ -92,10 +92,10 @@ Test files are Javascript files. You should put them inside the `./tests` folder
 
 At this time, we don't typically write Javascript test files. Instead, we describe them in a YAML file and a script takes care of generating the actual test/spec file.
 
-As an example, to write a test for the `DNS` resource, this is what we do:
+As an example, to write a test for the `DNS` resource (once it is ready), this is what we do:
 
 - create a `dns.yml` file in `./tests/defs`
-- describe the test in YAML (see `defs.yml` for details)
+- describe the test in YAML (see `dns.yml` for details)
 - once we're done, we run `./scripts.sh --generate-test dns.yml dns.spec.js` to generate `./tests/dns.spec.js`
 - run `yarn test dns.spec.js` to run the test
 
