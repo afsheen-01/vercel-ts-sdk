@@ -16,7 +16,7 @@ export const setVercelToken = (token: string) => {
 export const BASE_URL = "https://api.vercel.com";
 
 export const endpointMap = {
-  getUserTokens: `${BASE_URL}/v5/user/tokens`,
+  listUserTokens: `${BASE_URL}/v5/user/tokens`,
   createAuthToken: `${BASE_URL}/v3/user/tokens`,
   deleteToken: (id: string) => `${BASE_URL}/v3/user/tokens/${id}`,
   getTokenMetadata: (tokenId: string) =>
