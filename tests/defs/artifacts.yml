@@ -1,0 +1,72 @@
+tests:
+  - name: check if artifact exists
+    call: checkArtifactExists
+    with: '{hash:"abcd",teamId:"team1"}'
+    expect:
+      - var: method
+        value: head
+      - var: url
+        value: endpointMap.checkArtifactExists("abcd")
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: download cache artifact
+    call: downloadCacheArtifact
+    with: '{hash:"abcd",teamId:"team1",artifactClientInteractive:1}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.downloadCacheArtifact("abcd")
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+      - var: headers
+        value: '"x-artifact-client-interactive"'
+        rule: toHaveProperty
+      - var: headers["x-artifact-client-interactive"]
+        value: '"1"'
+  - name: get remote caching status
+    call: getRemoteCachingStatus
+    with: '{teamId:"team1"}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.getRemoteCachingStatus
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: record cache usage event
+    call: recordCacheUsageEvent
+    with: '{teamId:"team1",artifactClientInteractive:1,event:"HIT",hash:"abcd",sessionId:"session1",source:"LOCAL",duration:123}'
+    expect:
+      - var: method
+        value: post
+      - var: url
+        value: endpointMap.recordCacheUsageEvent
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+      - var: headers
+        value: '"x-artifact-client-interactive"'
+        rule: toHaveProperty
+      - var: headers["x-artifact-client-interactive"]
+        value: '"1"'
+      - var: body
+        value: '{event:"HIT",hash:"abcd",sessionId:"session1",source:"LOCAL",duration:123}'
+  - name: upload cache artifact
+    call: uploadCacheArtifact
+    with: '{hash:"abcd",teamId:"team1",artifactClientInteractive:1,artifactDuration:1000}'
+    expect:
+      - var: method
+        value: put
+      - var: url
+        value: endpointMap.uploadCacheArtifact("abcd")
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+      - var: headers["x-artifact-client-interactive"]
+        value: '"1"'
+      - var: headers["x-artifact-duration"]
+        value: '"1000"'

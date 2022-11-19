@@ -89,6 +89,10 @@ export const endpointMap = {
     `/v2/domains/${params.domain}/records/${params.recordId}`,
   listDNSRecords: (domain: string) => `/v4/domains/${domain}/records`,
   checkArtifactExists: (hash: string) => `/v8/artifacts/${hash}`,
+  downloadCacheArtifact: (hash: string) => `/v8/artifacts/${hash}`,
+  getRemoteCachingStatus: `/v8/artifacts/status`,
+  recordCacheUsageEvent: `/v8/artifacts/events`,
+  uploadCacheArtifact: (hash: string) => `/v8/artifacts/${hash}`,
 };
 
 export const nullIfUndefined = (val: any) => {
