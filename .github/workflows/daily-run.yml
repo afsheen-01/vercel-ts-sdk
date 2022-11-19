@@ -4,10 +4,8 @@ name: Pull-request test
 
 # Controls when the workflow will run
 on:
-  pull_request:
-    types: [opened, edited, reopened]
-    branches:
-      - main
+  schedule:
+    - cron: "0 0 * * 1-5"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,6 +23,8 @@ jobs:
         run: corepack enable
       - name: Clone repo
         uses: actions/checkout@v3
+      - name: Checkout main
+        run: git checkout main
       - name: Install dependencies
         run: yarn
       - name: Run tests
