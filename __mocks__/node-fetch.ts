@@ -10,6 +10,6 @@ export default (url: string, options: any) => {
   }
   const _url = new URL(url);
   const query = Object.fromEntries(_url.searchParams);
-  const { body, method } = options;
-  return new Response(JSON.stringify({ url, query, body, method }));
+  const { body, method, headers } = options;
+  return new Response(JSON.stringify({ url, query, body, method, headers }));
 };

@@ -139,3 +139,13 @@ export const del = <T>(url: string, options?: _RequestInit) => {
     ...(options?.data && { body: JSON.stringify(options?.data || {}) }),
   });
 };
+
+export const head = <T>(url: string, options?: _RequestInit) => {
+  const urlWithParams = constructQueryString(url, options?.query);
+  return asyncFetchWrapper<T>(urlWithParams, {
+    ...removeQueryAndData(options),
+    method: "head",
+    headers: headersWithConfig(options?.headers),
+    ...(options?.data && { body: JSON.stringify(options?.data || {}) }),
+  });
+};
