@@ -1,7 +1,7 @@
 export { setVercelToken } from "./utils/common";
 export { listAliases, listDeploymentAliases, getAlias, deleteAlias, assignAlias } from "./alias"
 export { checkArtifactExists, downloadCacheArtifact, getRemoteCachingStatus, recordCacheUsageEvent, uploadCacheArtifact } from "./artifacts"
-export { listUserTokens, createAuthToken, deleteToken, getTokenMetadata } from "./authorization"
+export { listUserTokens, createAuthToken, deleteToken, getTokenMetadata, listAuthTokens, loginWithEmail, verifyLoginRequest } from "./authorization"
 export { uploadCert, getCert, removeCert, issueNewCert } from "./certs"
 export { createNewCheck, getCheck, reRequestCheck, listChecks, updateCheck } from "./checks"
 export { listDeployments } from "./deployments"
