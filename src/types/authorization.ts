@@ -54,3 +54,32 @@ export type CreateAuthTokenParams = {
 
 export type DeleteTokenParams = { tokenId: string };
 export type GetTokenMetadataParams = { tokenId: string };
+
+export type ListAuthTokensResponse = {
+  tokens: AuthToken[];
+  testingToken: AuthToken;
+  pagination: Pagination;
+};
+
+export type LoginWithEmailParams = {
+  email: string;
+  tokenName?: string;
+};
+
+export type LoginWithEmailResponse = {
+  token: string;
+  securityCode: string;
+};
+
+export type VerifyLoginRequestParams = {
+  token: string;
+  email?: string;
+  ssoUserId?: string;
+  tokenName?: string;
+};
+
+export type VerifyLoginRequestResponse = {
+  token: string;
+  email: string;
+  teamId?: string;
+};

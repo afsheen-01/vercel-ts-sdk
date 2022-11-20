@@ -1,5 +1,12 @@
 import { endpointMap } from "./utils/common";
-import { CreateAuthTokenResponse, TokensResponse } from "./types/authorization";
+import {
+  CreateAuthTokenResponse,
+  LoginWithEmailParams,
+  LoginWithEmailResponse,
+  TokensResponse,
+  VerifyLoginRequestParams,
+  VerifyLoginRequestResponse,
+} from "./types/authorization";
 import {
   CreateAuthTokenParams,
   DeleteTokenParams,
@@ -35,4 +42,20 @@ export const getTokenMetadata = ({ tokenId }: GetTokenMetadataParams) => {
   return get<Pick<CreateAuthTokenResponse, "token">>(
     `${endpointMap.getTokenMetadata(tokenId)}`
   );
+};
+
+export const listAuthTokens = () => {
+  return get<TokensResponse>(endpointMap.listAuthTokens);
+};
+
+export const loginWithEmail = (params: LoginWithEmailParams) => {
+  return post<LoginWithEmailResponse>(endpointMap.loginWithEmail, {
+    data: params,
+  });
+};
+
+export const verifyLoginRequest = (params: VerifyLoginRequestParams) => {
+  return get<VerifyLoginRequestResponse>(endpointMap.verifyLoginRequest, {
+    query: params,
+  });
 };

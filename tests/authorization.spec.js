@@ -3,6 +3,9 @@ import {
   createAuthToken,
   deleteToken,
   getTokenMetadata,
+  listAuthTokens,
+  loginWithEmail,
+  verifyLoginRequest,
 } from "../src/authorization";
 import { endpointMap, BASE_URL } from "../src/utils/common";
 import { setVercelToken, listUserTokens } from "../src/index";
@@ -57,4 +60,42 @@ test("get token metadata", async () => {
   });
   expect(error).toBe(null);
   expect(data?.url).toBe(BASE_URL + endpointMap.getTokenMetadata("token1"));
+});
+
+test("list auth tokens", async () => {
+  const { data, error } = await listAuthTokens();
+  expect(error).toBe(null);
+  expect(data?.url).toBe(BASE_URL + endpointMap.listAuthTokens);
+});
+
+test("login with email", async () => {
+  const { data, error } = await loginWithEmail({
+    email: "john@doe.com",
+    token: "token1",
+  });
+  expect(error).toBe(null);
+  expect(data?.url).toBe(BASE_URL + endpointMap.loginWithEmail);
+  expect(data?.method).toBe("post");
+  expect(data?.body).toBe(
+    JSON.stringify({
+      email: "john@doe.com",
+      token: "token1",
+    })
+  );
+});
+
+test("verify login request", async () => {
+  const { data, error } = await verifyLoginRequest({
+    token: "token1",
+    email: "john@doe.com",
+    tokenName: "token-name-1",
+  });
+  expect(error).toBe(null);
+  expect(data?.url).toContain(BASE_URL + endpointMap.verifyLoginRequest);
+  expect(data?.method).toBe("get");
+  expect(data?.query).toEqual({
+    token: "token1",
+    email: "john@doe.com",
+    tokenName: "token-name-1",
+  });
 });
