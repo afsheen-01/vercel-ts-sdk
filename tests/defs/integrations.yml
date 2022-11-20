@@ -1,0 +1,53 @@
+tests:
+  - name: delete integration config
+    call: deleteIntegrationConfig
+    with: '{integrationId:"ig1",teamId:"team1"}'
+    expect:
+      - var: method
+        value: delete
+      - var: url
+        value: endpointMap.deleteIntegrationConfig("ig1")
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: list integration configs
+    call: listIntegrationConfigs
+    with: '{view:"view1",teamId:"team1"}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.listIntegrationConfigs
+        rule: toContain
+      - var: query
+        value: '{view:"view1",teamId:"team1"}'
+  - name: list git namespaces
+    call: listGitNamespaces
+    with: '{provider:"github"}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.listGitNamespaces
+        rule: toContain
+      - var: query
+        value: '{provider:"github"}'
+  - name: list git repos
+    call: listGitRepos
+    with: '{provider:"github", namespaceId:1}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.listGitRepos
+        rule: toContain
+      - var: query
+        value: '{provider:"github",namespaceId:"1"}'
+  - name: get integration config
+    call: getIntegrationConfig
+    with: '{integrationId:"ig1"}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.getIntegrationConfig("ig1")
