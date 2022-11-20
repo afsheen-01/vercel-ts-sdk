@@ -1,0 +1,32 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Merged into main
+
+# Controls when the workflow will run
+on:
+  push:
+    branches:
+      - 'main'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    name: "Run tests"
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{secrets.VERCEL_TOKEN}}
+    steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.5.0
+      - name: Enable yarn
+        run: corepack enable
+      - name: Clone repo
+        uses: actions/checkout@v3
+      - name: Checkout main
+        run: git checkout main
+      - name: Install dependencies
+        run: yarn
+      - name: Run tests
+        run: yarn test
