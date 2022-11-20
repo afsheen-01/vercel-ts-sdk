@@ -1,0 +1,127 @@
+tests:
+  - name: check domain availability
+    call: checkDomainAvailability
+    with: '{name:"domain"}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.checkDomainAvailability
+        rule: toContain
+      - var: query
+        value: '{name:"domain"}'
+  - name: check domain price
+    call: checkDomainPrice
+    with: '{name:"domain"}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.checkDomainPrice
+        rule: toContain
+      - var: query
+        value: '{name:"domain"}'
+  - name: get domain info
+    call: getDomainInfo
+    with: '{domain:"domain",teamId:"team1"}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.getDomainInfo("domain")
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: get domain config
+    call: getDomainConfig
+    with: '{domain:"domain",teamId:"team1"}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.getDomainConfig("domain")
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: list domains (no params)
+    call: listDomains
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.listDomains
+  - name: list domains (with params)
+    call: listDomains
+    with: '{teamId:"team1",since:1000}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.listDomains
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1",since:"1000"}'
+  - name: list domains (with pagination params)
+    call: listDomains
+    with: '{teamId:"team1",next:1000}'
+    expect:
+      - var: method
+        value: get
+      - var: url
+        value: endpointMap.listDomains
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1",until:"1000"}'
+  - name: purchase domain
+    call: purchaseDomain
+    with: '{name:"google.com",renew:true,expectedPrice:9.99}'
+    expect:
+      - var: method
+        value: post
+      - var: url
+        value: endpointMap.purchaseDomain
+      - var: body
+        value: '{name:"google.com",renew:true,expectedPrice:9.99}'
+  - name: purchase domain
+    call: purchaseDomain
+    with: '{teamId:"team1",name:"google.com",renew:true,expectedPrice:9.99}'
+    expect:
+      - var: method
+        value: post
+      - var: url
+        value: endpointMap.purchaseDomain
+        rule: toContain
+      - var: body
+        value: '{name:"google.com",renew:true,expectedPrice:9.99}'
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: register or transfer domain
+    call: registerOrTransferDomain
+    expect:
+      - var: method
+        value: post
+      - var: url
+        value: endpointMap.registerOrTransferDomain
+  - name: register or transfer domain (with teamId)
+    call: registerOrTransferDomain
+    with: '{teamId:"team1"}'
+    expect:
+      - var: method
+        value: post
+      - var: url
+        value: endpointMap.registerOrTransferDomain
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+  - name: remove domain
+    call: removeDomain
+    with: '{domain:"google.com",teamId:"team1"}'
+    expect:
+      - var: method
+        value: delete
+      - var: url
+        value: endpointMap.removeDomain("google.com")
+        rule: toContain
+      - var: query
+        value: '{teamId:"team1"}'
+
