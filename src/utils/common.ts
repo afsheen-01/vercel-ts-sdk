@@ -57,7 +57,7 @@ export const endpointMap = {
   updateCheck: (params: { deploymentId: string; checkId: string }) =>
     `/v1/deployments/${params.deploymentId}/checks/${params.checkId}`,
 
-  // deployments
+  // deployments TODO
   listDeployments: `/v6/deployments`,
 
   // dns
@@ -67,7 +67,14 @@ export const endpointMap = {
   listDNSRecords: (domain: string) => `/v4/domains/${domain}/records`,
 
   // domains
-  // TODO
+  checkDomainAvailability: `/v4/domains/status`,
+  checkDomainPrice: `/v4/domains/price`,
+  getDomainInfo: (domain: string) => `/v5/domains/${domain}`,
+  getDomainConfig: (domain: string) => `/v6/domains/${domain}/config`,
+  listDomains: `/v5/domains`,
+  purchaseDomain: `/v4/domains/buy`,
+  registerOrTransferDomain: `/v4/domains`,
+  removeDomain: (domain: string) => `/v6/domains/${domain}`,
 
   // integrations
   deleteIntegrationConfig: (integrationId: string) =>
